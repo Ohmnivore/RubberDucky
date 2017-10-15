@@ -1,18 +1,31 @@
 import glfw
 from OpenGL.GL import *
+from app import app
 from fly_state import FlyState
+
+def on_key(window, key, scancode, action, mods):
+    if action == glfw.PRESS:
+        app.keys[key] = True
+    elif action == glfw.RELEASE:
+        app.keys[key] = False
+
+def on_resize(window, width, height):
+    app.width = width
+    app.height = height
+    app.aspect_ratio = app.width / app.height
 
 def main():
     # Initialize the library
     if not glfw.init():
         return
 
+    # Set 3.3 core profile
     glfw.window_hint(glfw.CONTEXT_VERSION_MAJOR, 3)
     glfw.window_hint(glfw.CONTEXT_VERSION_MINOR, 3)
     glfw.window_hint(glfw.OPENGL_PROFILE, glfw.OPENGL_CORE_PROFILE)
 
     # Create a windowed mode window and its OpenGL context
-    window = glfw.create_window(1024, 720, 'RubberDucky', None, None)
+    window = glfw.create_window(app.width, app.height, 'RubberDucky', None, None)
     if not window:
         glfw.terminate()
         return
@@ -20,6 +33,11 @@ def main():
     # Make the window's context current
     glfw.make_context_current(window)
 
+    # Register handlers
+    glfw.set_window_size_callback(window, on_resize)
+    glfw.set_key_callback(window, on_key)
+
+    # Create state
     state = FlyState()
 
     # Loop until the user closes the window
@@ -28,6 +46,7 @@ def main():
         glClearColor(1, 1, 1, 1)
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
 
+        # Manage state
         state.update()
         state.render()
 
@@ -37,6 +56,7 @@ def main():
         # Poll for and process events
         glfw.poll_events()
 
+    # Shutdown
     state.destroy()
     glfw.terminate()
 

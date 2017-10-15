@@ -7,9 +7,11 @@ layout (location = 2) in vec3 aNormal;
 out vec2 ourTexture;
 out vec3 ourNormal;
 
+uniform mat4 mvp;
+
 void main()
 {
-    gl_Position = vec4(aPosition, 1.0);
+    gl_Position = mvp * vec4(aPosition, 1.0);
 
     ourTexture = aTexture;
     ourNormal = aNormal;

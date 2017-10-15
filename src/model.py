@@ -1,13 +1,15 @@
-import numpy
+from pyrr import Vector3, Matrix44, Quaternion
 import os.path as path
 from obj_parser import MtlParser, ObjParser
+from OpenGL.GL import *
 
 class Model:
 
     def __init__(self):
-        self.pos = numpy.array([0, 0, 0])
-        self.scale = numpy.array([0, 0, 0])
-        self.rot = numpy.array([0, 0, 0])
+        self.pos = Vector3([0, 0, 0])
+        self.scale = Vector3([1, 1, 1])
+        self.rot = Vector3([0, 0, 0])
+        self.orientation = Quaternion()
         self.meshmtl_map = None
 
     def loadObj(self, filepath):
@@ -29,7 +31,22 @@ class Model:
         for name, meshmtl in self.meshmtl_map.items():
             meshmtl.mesh.genBuffers()
     
-    def render(self):
+    def update(self):
+        pass
+
+    def render(self, program, view, projection):
+        # Model matrix
+        model = Matrix44.from_scale(self.scale)
+        model = model * self.orientation
+        translation = Matrix44.from_translation(self.pos)
+        model = model * translation
+        # model = Matrix44.identity()
+
+        # MVP matrix
+        mvp = projection * view * model
+        mvpUni = glGetUniformLocation(program, 'mvp')
+        glUniformMatrix4fv(mvpUni, 1, GL_FALSE, mvp.tolist())
+
         for name, meshmtl in self.meshmtl_map.items():
             meshmtl.render()
     

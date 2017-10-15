@@ -1,4 +1,4 @@
-import numpy
+from pyrr import Vector3
 from material_mesh import MaterialMesh, Face
 
 class MtlParser:
@@ -59,7 +59,7 @@ class MtlParser:
             return None
 
     def readColor(self):
-        return numpy.array([self.readNumber(), self.readNumber(), self.readNumber()])
+        return Vector3([self.readNumber(), self.readNumber(), self.readNumber()])
 
 class ObjParser:
 
