@@ -8,3 +8,6 @@ class State:
 
     def render(self):
         pass
+    
+    def destroy(self):
+        pass

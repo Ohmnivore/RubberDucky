@@ -25,8 +25,7 @@ def main():
     # Loop until the user closes the window
     while not glfw.window_should_close(window):
         # Render here, e.g. using pyOpenGL
-        glViewport(0, 0, 1280, 720)
-        glClearColor(0, 1, 1, 1)
+        glClearColor(1, 1, 1, 1)
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
 
         state.update()
@@ -38,6 +37,7 @@ def main():
         # Poll for and process events
         glfw.poll_events()
 
+    state.destroy()
     glfw.terminate()
 
 if __name__ == '__main__':

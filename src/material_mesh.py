@@ -10,6 +10,9 @@ class Material:
         self.specular = numpy.array([0, 0, 0])
         self.specularExponent = 0.0
         self.transparency = 0.0
+    
+    def destroy(self):
+        pass
 
 class Face:
 
@@ -66,11 +69,11 @@ class Mesh:
         glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, 8 * 4, ctypes.c_void_p(5 * 4))
         glEnableVertexAttribArray(2)
 
-        # glBindVertexArray(0)
-        # glBindBuffer(GL_ARRAY_BUFFER, 0)
-        # glDisableVertexAttribArray(0)
-        # glDisableVertexAttribArray(1)
-        # glDisableVertexAttribArray(2)
+        glBindVertexArray(0)
+        glBindBuffer(GL_ARRAY_BUFFER, 0)
+        glDisableVertexAttribArray(0)
+        glDisableVertexAttribArray(1)
+        glDisableVertexAttribArray(2)
     
     def genBuffer(self, flat_list):
         buffer = glGenBuffers(1)
@@ -80,6 +83,10 @@ class Mesh:
         glBufferData(GL_ARRAY_BUFFER, len(flat_list) * 4, arr.tostring(), GL_STATIC_DRAW)
         return buffer
 
+    def destroy(self):
+        glDeleteVertexArrays(1, [self.vao])
+        glDeleteBuffers(1, [self.vbo])
+
 class MaterialMesh:
 
     def __init__(self):
@@ -88,4 +95,8 @@ class MaterialMesh:
 
     def render(self):
         glBindVertexArray(self.mesh.vao)
-        glDrawArrays(GL_TRIANGLES, 0, len(self.mesh.faces))
+        glDrawArrays(GL_TRIANGLES, 0, len(self.mesh.faces) * 3)
+
+    def destroy(self):
+        self.mesh.destroy()
+        self.mtl.destroy()

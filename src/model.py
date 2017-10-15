@@ -32,3 +32,7 @@ class Model:
     def render(self):
         for name, meshmtl in self.meshmtl_map.items():
             meshmtl.render()
+    
+    def destroy(self):
+        for name, meshmtl in self.meshmtl_map.items():
+            meshmtl.destroy()

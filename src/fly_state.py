@@ -21,18 +21,15 @@ class FlyState(State):
         self.char = Model()
         # self.char.loadObj('assets/low poly girl/low poly girl.obj')
         self.char.loadObj('assets/triangle/triangle.obj')
+        # self.char.loadObj('assets/teapot/teapot.obj')
 
     def update(self):
         pass
 
     def render(self):
-        glDisable(GL_CULL_FACE)
         glUseProgram(self.shader)
-        glBindFramebuffer(GL_FRAMEBUFFER, 0)
-        # glMatrixMode(GL_PROJECTION)
-        # glOrtho(0, 1280, 0, 720, -1, 1)
-        glEnable(GL_BLEND)
-        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
-
         self.char.render()
         glUseProgram(0)
+
+    def destroy(self):
+        self.char.destroy()
