@@ -30,4 +30,5 @@ class Model:
             meshmtl.mesh.genBuffers()
     
     def render(self):
-        pass
+        for name, meshmtl in self.meshmtl_map.items():
+            meshmtl.render()
