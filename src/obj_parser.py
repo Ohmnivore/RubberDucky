@@ -34,7 +34,7 @@ class MtlParser:
         elif word == 'Ns':
             self.cur_mtl.mtl.specularExponent = self.readNumber()
         elif word == 'd':
-            self.cur_mtl.mtl.transparency = 1.0 - self.readNumber()
+            self.cur_mtl.mtl.alpha = 1.0 - self.readNumber()
         elif word == 'Ka':
             self.cur_mtl.mtl.ambient = self.readColor()
         elif word == 'Kd':

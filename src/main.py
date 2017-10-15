@@ -6,7 +6,7 @@ from fly_state import FlyState
 import time
 
 def on_key(window, key, scancode, action, mods):
-    if action == glfw.PRESS:
+    if action == glfw.PRESS or action == glfw.REPEAT:
         app.keys[key] = True
     elif action == glfw.RELEASE:
         app.keys[key] = False
@@ -48,6 +48,7 @@ def main():
     # Setup OpenGL global config
     glClearColor(1, 1, 1, 1)
     glEnable(GL_CULL_FACE)
+    glEnable(GL_DEPTH_TEST)
 
     # Timing
     last_frame = time.time()

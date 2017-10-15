@@ -47,7 +47,7 @@ class Model:
         glUniformMatrix4fv(mvpUni, 1, GL_FALSE, mvp.tolist())
 
         for name, meshmtl in self.meshmtl_map.items():
-            meshmtl.render()
+            meshmtl.render(program)
     
     def destroy(self):
         for name, meshmtl in self.meshmtl_map.items():

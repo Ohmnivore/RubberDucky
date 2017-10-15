@@ -9,8 +9,21 @@ class Material:
         self.diffuse = Vector3([0, 0, 0])
         self.specular = Vector3([0, 0, 0])
         self.specularExponent = 0.0
-        self.transparency = 0.0
+        self.alpha = 0.0
     
+    def bindUniforms(self, program):
+        ambientUni = glGetUniformLocation(program, 'uMaterial.ambient')
+        diffuseUni = glGetUniformLocation(program, 'uMaterial.diffuse')
+        specularUni = glGetUniformLocation(program, 'uMaterial.specular')
+        specularExponentUni = glGetUniformLocation(program, 'uMaterial.specularExponent')
+        alphaUni = glGetUniformLocation(program, 'uMaterial.alpha')
+
+        glUniform3fv(ambientUni, 1, self.ambient.tolist())
+        glUniform3fv(diffuseUni, 1, self.diffuse.tolist())
+        glUniform3fv(specularUni, 1, self.specular.tolist())
+        glUniform1f(specularExponentUni, self.specularExponent)
+        glUniform1f(alphaUni, self.alpha)
+
     def destroy(self):
         pass
 
@@ -93,7 +106,8 @@ class MaterialMesh:
         self.mtl = Material()
         self.mesh = Mesh()
 
-    def render(self):
+    def render(self, program):
+        self.mtl.bindUniforms(program)
         glBindVertexArray(self.mesh.vao)
         glDrawArrays(GL_TRIANGLES, 0, len(self.mesh.faces) * 3)
 
