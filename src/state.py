@@ -1,13 +1,16 @@
 class State:
 
     def __init__(self):
-        pass
+        self.entities = []
 
     def update(self):
-        pass
+        for entity in self.entities:
+            entity.update()
 
-    def render(self):
-        pass
+    def render(self, camera, program):
+        for entity in self.entities:
+            entity.render(camera, program)
     
     def destroy(self):
-        pass
+        for entity in self.entities:
+            entity.destroy()

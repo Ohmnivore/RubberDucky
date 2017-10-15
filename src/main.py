@@ -1,6 +1,7 @@
 import glfw
 from OpenGL.GL import *
 from app import app
+from camera import Camera
 from fly_state import FlyState
 
 def on_key(window, key, scancode, action, mods):
@@ -37,18 +38,26 @@ def main():
     glfw.set_window_size_callback(window, on_resize)
     glfw.set_key_callback(window, on_key)
 
-    # Create state
+    # Create state and camera
+    camera = Camera()
     state = FlyState()
+
+    # Setup OpenGL global config
+    glClearColor(1, 1, 1, 1)
+    glEnable(GL_CULL_FACE)
 
     # Loop until the user closes the window
     while not glfw.window_should_close(window):
+        if app.keys[glfw.KEY_ESCAPE]:
+            exit()
+
         # Render here, e.g. using pyOpenGL
-        glClearColor(1, 1, 1, 1)
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
 
-        # Manage state
+        # Manage state and camera
+        camera.update()
         state.update()
-        state.render()
+        state.render(camera)
 
         # Swap front and back buffers
         glfw.swap_buffers(window)

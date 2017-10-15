@@ -34,16 +34,15 @@ class Model:
     def update(self):
         pass
 
-    def render(self, program, view, projection):
+    def render(self, camera, program):
         # Model matrix
         model = Matrix44.from_scale(self.scale)
         model = model * self.orientation
         translation = Matrix44.from_translation(self.pos)
         model = model * translation
-        # model = Matrix44.identity()
 
         # MVP matrix
-        mvp = projection * view * model
+        mvp = camera.projection * camera.view * model
         mvpUni = glGetUniformLocation(program, 'mvp')
         glUniformMatrix4fv(mvpUni, 1, GL_FALSE, mvp.tolist())
 
