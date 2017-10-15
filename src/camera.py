@@ -2,12 +2,13 @@ from pyrr import Vector3, Matrix44
 import math
 import glfw
 from app import app
+import numpy
 
 class Camera:
 
     def __init__(self):
         self.cam_pos = Vector3([0, 0, 0])
-        self.horizontal_angle = 3.14
+        self.horizontal_angle = numpy.pi
         self.vertical_angle = 0.0
         self.view = Matrix44.identity()
         self.movement_multiplier = 75.0
@@ -30,9 +31,9 @@ class Camera:
             math.cos(self.vertical_angle) * math.cos(self.horizontal_angle)
         ])
         right = Vector3([
-            math.sin(self.horizontal_angle - 3.14 / 2.0),
+            math.sin(self.horizontal_angle - numpy.pi / 2.0),
             0,
-            math.cos(self.horizontal_angle - 3.14 / 2.0)
+            math.cos(self.horizontal_angle - numpy.pi / 2.0)
         ])
         up = Vector3.cross( right, direction )
 

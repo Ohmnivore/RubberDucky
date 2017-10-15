@@ -25,6 +25,7 @@ def main():
     glfw.window_hint(glfw.CONTEXT_VERSION_MAJOR, 3)
     glfw.window_hint(glfw.CONTEXT_VERSION_MINOR, 3)
     glfw.window_hint(glfw.OPENGL_PROFILE, glfw.OPENGL_CORE_PROFILE)
+    glfw.window_hint(glfw.DOUBLEBUFFER, False)
 
     # Create a windowed mode window and its OpenGL context
     window = glfw.create_window(app.width, app.height, 'RubberDucky', None, None)
@@ -38,6 +39,7 @@ def main():
     # Register handlers
     glfw.set_window_size_callback(window, on_resize)
     glfw.set_key_callback(window, on_key)
+    glfw.swap_interval(0)
 
     # Create state and camera
     camera = Camera()
@@ -55,10 +57,7 @@ def main():
     # Loop until the user closes the window
     while not glfw.window_should_close(window):
         if app.keys[glfw.KEY_ESCAPE]:
-            exit()
-
-        # Render here, e.g. using pyOpenGL
-        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
+            glfw.set_window_should_close(window, True)
 
         # Timing
         cur_frame = time.time()
@@ -72,16 +71,20 @@ def main():
             report_timer = 0
             max_elapsed = 0
 
-        # Manage state and camera
-        camera.update(elapsed)
-        state.update(elapsed)
-        state.render(elapsed, camera)
+        if elapsed > 0:
+            glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
 
-        # Swap front and back buffers
-        glfw.swap_buffers(window)
+            # Manage state and camera
+            camera.update(elapsed)
+            state.update(elapsed)
+            state.render(elapsed, camera)
 
-        # Poll for and process events
-        glfw.poll_events()
+            # Poll for and process events
+            glfw.poll_events()
+
+            # Swap front and back buffers
+            glfw.swap_buffers(window)
+            glFinish()
 
     # Shutdown
     state.destroy()
