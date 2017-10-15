@@ -35,12 +35,12 @@ class FlyState(State):
         self.triangle.loadObj('assets/triangle/triangle.obj')
         self.triangle.pos += [8, 0, 0]
 
-    def update(self):
-        super(FlyState, self).update()
+    def update(self, elapsed):
+        super(FlyState, self).update(elapsed)
 
-    def render(self, camera):
+    def render(self, elapsed, camera):
         glUseProgram(self.shader)
-        super(FlyState, self).render(camera, self.shader)
+        super(FlyState, self).render(elapsed, camera, self.shader)
         glUseProgram(0)
 
     def destroy(self):

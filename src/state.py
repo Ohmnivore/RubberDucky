@@ -3,13 +3,13 @@ class State:
     def __init__(self):
         self.entities = []
 
-    def update(self):
+    def update(self, elapsed):
         for entity in self.entities:
-            entity.update()
+            entity.update(elapsed)
 
-    def render(self, camera, program):
+    def render(self, elapsed, camera, program):
         for entity in self.entities:
-            entity.render(camera, program)
+            entity.render(elapsed, camera, program)
     
     def destroy(self):
         for entity in self.entities:

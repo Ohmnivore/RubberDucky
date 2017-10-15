@@ -31,10 +31,10 @@ class Model:
         for name, meshmtl in self.meshmtl_map.items():
             meshmtl.mesh.genBuffers()
     
-    def update(self):
+    def update(self, elapsed):
         pass
 
-    def render(self, camera, program):
+    def render(self, elapsed, camera, program):
         # Model matrix
         model = Matrix44.from_scale(self.scale)
         model = model * self.orientation

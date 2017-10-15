@@ -3,6 +3,7 @@ from OpenGL.GL import *
 from app import app
 from camera import Camera
 from fly_state import FlyState
+import time
 
 def on_key(window, key, scancode, action, mods):
     if action == glfw.PRESS:
@@ -46,6 +47,11 @@ def main():
     glClearColor(1, 1, 1, 1)
     glEnable(GL_CULL_FACE)
 
+    # Timing
+    last_frame = time.time()
+    report_timer = 0
+    max_elapsed = 0
+
     # Loop until the user closes the window
     while not glfw.window_should_close(window):
         if app.keys[glfw.KEY_ESCAPE]:
@@ -54,10 +60,22 @@ def main():
         # Render here, e.g. using pyOpenGL
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
 
+        # Timing
+        cur_frame = time.time()
+        elapsed = cur_frame - last_frame
+        if elapsed > max_elapsed:
+            max_elapsed = elapsed
+        last_frame = cur_frame
+        report_timer += elapsed
+        if report_timer > 1:
+            print('FPS: {} Max elapsed: {}'.format(int(1.0 / elapsed), max_elapsed))
+            report_timer = 0
+            max_elapsed = 0
+
         # Manage state and camera
-        camera.update()
-        state.update()
-        state.render(camera)
+        camera.update(elapsed)
+        state.update(elapsed)
+        state.render(elapsed, camera)
 
         # Swap front and back buffers
         glfw.swap_buffers(window)
