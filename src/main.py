@@ -26,10 +26,14 @@ def main():
     glfw.window_hint(glfw.CONTEXT_VERSION_MAJOR, 3)
     glfw.window_hint(glfw.CONTEXT_VERSION_MINOR, 3)
     glfw.window_hint(glfw.OPENGL_PROFILE, glfw.OPENGL_CORE_PROFILE)
-    glfw.window_hint(glfw.DOUBLEBUFFER, False)
 
     # Create a windowed mode window and its OpenGL context
-    window = glfw.create_window(app.width, app.height, 'RubberDucky', None, None)
+    monitor = None
+    if app.fullscreen:
+        monitor = glfw.get_primary_monitor()
+        video_mode = glfw.get_video_mode(monitor)
+        on_resize(None, video_mode[0][0], video_mode[0][1])
+    window = glfw.create_window(app.width, app.height, 'RubberDucky', monitor, None)
     if not window:
         glfw.terminate()
         return
@@ -41,6 +45,7 @@ def main():
     glfw.set_window_size_callback(window, on_resize)
     glfw.set_key_callback(window, on_key)
     glfw.swap_interval(0) # Remove v-sync
+    glfw.set_input_mode(window, glfw.CURSOR, glfw.CURSOR_DISABLED) # Disable cursor
 
     # Create state and camera
     camera = Camera()
