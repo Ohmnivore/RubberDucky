@@ -22,6 +22,7 @@ def main():
         return
 
     # Set 3.3 core profile
+    glfw.window_hint(glfw.SAMPLES, 8) # MSAA
     glfw.window_hint(glfw.CONTEXT_VERSION_MAJOR, 3)
     glfw.window_hint(glfw.CONTEXT_VERSION_MINOR, 3)
     glfw.window_hint(glfw.OPENGL_PROFILE, glfw.OPENGL_CORE_PROFILE)
@@ -46,8 +47,9 @@ def main():
     state = FlyState()
 
     # Setup OpenGL global config
-    glClearColor(1.0, 1.0, 1.0, 1.0)
+    glEnable(GL_MULTISAMPLE)
     glEnable(GL_DEPTH_TEST)
+    glClearColor(1.0, 1.0, 1.0, 1.0)
 
     # Timing
     last_frame_time = time.clock()
