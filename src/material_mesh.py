@@ -5,9 +5,9 @@ from OpenGL.GL import *
 class Material:
 
     def __init__(self):
-        self.ambient = Vector3([0, 0, 0])
-        self.diffuse = Vector3([0, 0, 0])
-        self.specular = Vector3([0, 0, 0])
+        self.ambient = Vector3([0.0, 0.0, 0.0])
+        self.diffuse = Vector3([0.0, 0.0, 0.0])
+        self.specular = Vector3([0.0, 0.0, 0.0])
         self.specularExponent = 0.0
         self.alpha = 0.0
     
@@ -55,10 +55,10 @@ class Mesh:
             for i in range(0, 3):
                 idx = faceIdx * 3 + i
                 vertex = self.vertices[face.vertices[i]]
-                texcoords = [0, 0]
+                texcoords = [0.0, 0.0]
                 if len(face.texcoords) > i:
                     texcoords = self.texcoords[face.texcoords[i]]
-                normal = [0, 0, 1]
+                normal = [0.0, 0.0, 1.0]
                 if len(face.normals) > i:
                     normal = self.normals[face.normals[i]]
                 

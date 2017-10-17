@@ -6,9 +6,9 @@ from OpenGL.GL import *
 class Model:
 
     def __init__(self):
-        self.pos = Vector3([0, 0, 0])
-        self.scale = Vector3([1, 1, 1])
-        self.rot = Vector3([0, 0, 0])
+        self.pos = Vector3([0.0, 0.0, 0.0])
+        self.scale = Vector3([1.0, 1.0, 1.0])
+        self.rot = Vector3([0.0, 0.0, 0.0])
         self.orientation = Quaternion()
         self.meshmtl_map = None
 

@@ -7,7 +7,7 @@ import numpy
 class Camera:
 
     def __init__(self):
-        self.cam_pos = Vector3([0, 0, 0])
+        self.cam_pos = Vector3([0.0, 0.0, 0.0])
         self.horizontal_angle = numpy.pi
         self.vertical_angle = 0.0
         self.view = Matrix44.identity()

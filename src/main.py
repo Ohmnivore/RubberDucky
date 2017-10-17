@@ -39,21 +39,25 @@ def main():
     # Register handlers
     glfw.set_window_size_callback(window, on_resize)
     glfw.set_key_callback(window, on_key)
-    glfw.swap_interval(0)
+    glfw.swap_interval(0) # Remove v-sync
 
     # Create state and camera
     camera = Camera()
     state = FlyState()
 
     # Setup OpenGL global config
-    glClearColor(1, 1, 1, 1)
-    glEnable(GL_CULL_FACE)
+    glClearColor(1.0, 1.0, 1.0, 1.0)
     glEnable(GL_DEPTH_TEST)
 
     # Timing
-    last_frame = time.time()
-    report_timer = 0
-    max_elapsed = 0
+    last_frame_time = time.clock()
+    time_since_last_render = 0.0
+
+    # Statistics
+    last_report_time = last_frame_time
+    report_timer = 0.0
+    frames_since_last_report = 0
+    max_elapsed = 0.0
 
     # Loop until the user closes the window
     while not glfw.window_should_close(window):
@@ -61,24 +65,34 @@ def main():
             glfw.set_window_should_close(window, True)
 
         # Timing
-        cur_frame = time.time()
-        elapsed = cur_frame - last_frame
-        if elapsed > max_elapsed:
-            max_elapsed = elapsed
-        last_frame = cur_frame
-        report_timer += elapsed
-        if report_timer > 1:
-            print('FPS: {} Max elapsed: {}'.format(int(1.0 / elapsed), max_elapsed))
-            report_timer = 0
-            max_elapsed = 0
+        cur_frame_time = time.clock()
+        elapsed = cur_frame_time - last_frame_time
+        time_since_last_render += elapsed
+        last_frame_time = cur_frame_time
 
-        if elapsed > 0:
+        if app.max_fps < 0 or time_since_last_render > 1.0 / app.max_fps:
+            # Gathering statistics
+            if time_since_last_render > max_elapsed:
+                max_elapsed = time_since_last_render
+            report_timer += time_since_last_render
+            if report_timer > 1.0:
+                time_since_last_report = cur_frame_time - last_report_time
+                last_report_time = cur_frame_time
+                print('FPS: {:.2f}    Max elapsed: {:.4f}'.format(
+                    frames_since_last_report / time_since_last_report, max_elapsed))
+                report_timer = 0.0
+                max_elapsed = 0.0
+                frames_since_last_report = 0.0
+            frames_since_last_report += 1
+
+            # Clear screen
             glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
 
             # Manage state and camera
-            camera.update(elapsed)
-            state.update(elapsed)
-            state.render(elapsed, camera)
+            camera.update(time_since_last_render)
+            state.update(time_since_last_render)
+            state.render(time_since_last_render, camera)
+            time_since_last_render = 0.0
 
             # Poll for and process events
             glfw.poll_events()
