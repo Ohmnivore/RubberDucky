@@ -6,11 +6,11 @@ class Sun:
 
     def __init__(self):
         self.ambient_color = Vector3([1.0, 1.0, 1.0])
-        self.ambient_strength = 0.01
+        self.ambient_strength = 0.3
         self.diffuse_color = Vector3([1.0, 1.0, 1.0])
         self.diffuse_strength = 1.0
         self.specular_color = Vector3([1.0, 1.0, 1.0])
-        self.specular_strength = 0.1
+        self.specular_strength = 0.3
         self.light_direction = Vector3([1.0, -1.0, -0.5])
 
     def bind_uniforms(self, program):
