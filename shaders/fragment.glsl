@@ -1,8 +1,9 @@
 #version 330 core
 
-out vec4 FragColor;
+out vec4 fragColor;
 
 in vec2 ourTexture;
+in vec3 ourPosition;
 in vec3 ourNormal;
 
 struct Material
@@ -25,9 +26,26 @@ struct Sun
     float specularStrength;
     vec3 lightDirection;
 };
-uniform Material uSun;
+uniform Sun uSun;
+
+uniform vec3 uViewPosition;
 
 void main()
 {
-    FragColor = vec4(uMaterial.diffuseColor.rgb, 1.0);
+    // ambient
+    vec3 ambient = uSun.ambientStrength * uSun.ambientColor * uMaterial.ambientColor;
+
+    // diffuse 
+    vec3 norm = normalize(ourNormal);
+    vec3 lightDir = normalize(uSun.lightDirection);
+    float diff = max(dot(norm, -lightDir), 0.0);
+    vec3 diffuse = diff * uSun.diffuseStrength * uSun.diffuseColor * uMaterial.diffuseColor;
+
+    // specular
+    vec3 viewDir = normalize(uViewPosition - ourPosition);
+    vec3 reflectDir = reflect(lightDir, norm);  
+    float spec = pow(max(dot(viewDir, reflectDir), 0.0), uMaterial.specularExponent);
+    vec3 specular = spec * uSun.specularStrength * uSun.specularColor * uMaterial.specularColor;
+
+    fragColor = vec4(ambient + diffuse, uMaterial.alpha);
 }

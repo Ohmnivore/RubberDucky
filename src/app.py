@@ -1,3 +1,5 @@
+from sun import Sun
+
 class App:
 
     def __init__(self):
@@ -13,5 +15,6 @@ class App:
         self.keys = []
         for key in range(0, 360):
             self.keys.append(False)
+        self.sun = Sun()
 
 app = App()

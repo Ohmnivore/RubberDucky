@@ -11,6 +11,7 @@ class Camera:
         self.horizontal_angle = numpy.pi
         self.vertical_angle = 0.0
         self.view = Matrix44.identity()
+        self.projection = Matrix44.identity()
         self.movement_multiplier = 75.0
         self.rotation_multiplier = 75.0
 

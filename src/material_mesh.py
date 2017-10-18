@@ -52,13 +52,25 @@ class Mesh:
 
         faceIdx = 0
         for face in self.faces:
+            # Generate normal from vertices if doesn't exist
+            # Gives it flat shading: all three vertices have the face's normal
+            normal = [0.0, 0.0, 0.0]
+            if len(face.normals) == 0:
+                p0 = self.vertices[face.vertices[0]]
+                p1 = self.vertices[face.vertices[1]]
+                p2 = self.vertices[face.vertices[2]]
+                u = [p1[0] - p0[0], p1[1] - p0[1], p1[2] - p0[2]]
+                v = [p2[0] - p0[0], p2[1] - p0[1], p2[2] - p0[2]]
+                normal[0] = u[1] * v[2] - u[2] * v[1]
+                normal[1] = u[2] * v[0] - u[0] * v[2]
+                normal[2] = u[0] * v[1] - u[1] * v[0]
+
             for i in range(0, 3):
                 idx = faceIdx * 3 + i
                 vertex = self.vertices[face.vertices[i]]
                 texcoords = [0.0, 0.0]
                 if len(face.texcoords) > i:
                     texcoords = self.texcoords[face.texcoords[i]]
-                normal = [0.0, 0.0, 1.0]
                 if len(face.normals) > i:
                     normal = self.normals[face.normals[i]]
                 
