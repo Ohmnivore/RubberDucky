@@ -36,7 +36,7 @@ class Model:
     def update(self, elapsed):
         pass
 
-    def render(self, elapsed, camera, program):
+    def render(self, opaque, elapsed, camera, program):
         # Model matrix
         model = Matrix44.from_scale(self.scale)
         model = model * self.orientation
@@ -63,7 +63,10 @@ class Model:
         glUniform1f(gamma_uni, app.gamma)
 
         for name, meshmtl in self.meshmtl_map.items():
-            meshmtl.render(program)
+            if opaque and meshmtl.mtl.alpha == 1.0:
+                meshmtl.render(program)
+            elif not opaque and meshmtl.mtl.alpha < 1.0:
+                meshmtl.render(program)
     
     def destroy(self):
         for name, meshmtl in self.meshmtl_map.items():
