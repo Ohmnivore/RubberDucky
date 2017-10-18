@@ -41,6 +41,8 @@ class MtlParser:
             self.cur_mtl.mtl.diffuse_color = self.read_color()
         elif word == 'Ks':
             self.cur_mtl.mtl.specular_color = self.read_color()
+        elif word == 'Ke':
+            self.cur_mtl.mtl.emissive_color = self.read_color()
     
     def seek_next_word(self):
         self.cur_word += 1

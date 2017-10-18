@@ -9,6 +9,7 @@ class Material:
         self.diffuse_color = Vector3([0.0, 0.0, 0.0])
         self.specular_color = Vector3([0.0, 0.0, 0.0])
         self.specular_exponent = 0.0
+        self.emissive_color = Vector3([0.0, 0.0, 0.0])
         self.alpha = 0.0
     
     def bind_uniforms(self, program):
@@ -17,11 +18,13 @@ class Material:
         specular_uni = glGetUniformLocation(program, 'uMaterial.specularColor')
         specular_exponent_uni = glGetUniformLocation(program, 'uMaterial.specularExponent')
         alpha_uni = glGetUniformLocation(program, 'uMaterial.alpha')
+        emissive_color_uni = glGetUniformLocation(program, 'uMaterial.emissiveColor')
 
         glUniform3fv(ambient_uni, 1, self.ambient_color.tolist())
         glUniform3fv(diffuse_uni, 1, self.diffuse_color.tolist())
         glUniform3fv(specular_uni, 1, self.specular_color.tolist())
         glUniform1f(specular_exponent_uni, self.specular_exponent)
+        glUniform3fv(emissive_color_uni, 1, self.emissive_color.tolist())
         glUniform1f(alpha_uni, self.alpha)
 
     def destroy(self):

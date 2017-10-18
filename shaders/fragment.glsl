@@ -12,6 +12,7 @@ struct Material
     vec3 diffuseColor;
     vec3 specularColor;
     float specularExponent;
+    vec3 emissiveColor;
     float alpha;
 };
 uniform Material uMaterial;
@@ -47,5 +48,5 @@ void main()
     float spec = pow(max(dot(norm, halfwayDir), 0.0), uMaterial.specularExponent);
     vec3 specular = spec * uSun.specularStrength * uSun.specularColor * uMaterial.specularColor;
 
-    fragColor = vec4(ambient + diffuse + specular, uMaterial.alpha);
+    fragColor = vec4(ambient + diffuse + specular + uMaterial.emissiveColor, uMaterial.alpha);
 }
