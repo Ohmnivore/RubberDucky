@@ -1,6 +1,7 @@
 from pyrr import Vector3
 import array
 from OpenGL.GL import *
+from math_util import pow_vec_3D
 
 class Material:
 
@@ -26,6 +27,12 @@ class Material:
         glUniform1f(specular_exponent_uni, self.specular_exponent)
         glUniform3fv(emissive_color_uni, 1, self.emissive_color.tolist())
         glUniform1f(alpha_uni, self.alpha)
+
+    def gamma_correct(self, gamma):
+        pow_vec_3D(self.ambient_color, gamma)
+        pow_vec_3D(self.diffuse_color, gamma)
+        pow_vec_3D(self.specular_color, gamma)
+        pow_vec_3D(self.emissive_color, gamma)
 
     def destroy(self):
         pass

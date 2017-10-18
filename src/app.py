@@ -10,11 +10,13 @@ class App:
         self.fov = 45.0
         self.near = 0.1
         self.far = 1000.0
+        self.gamma = 2.2
 
         self.aspect_ratio = self.width / self.height
         self.keys = []
         for key in range(0, 360):
             self.keys.append(False)
         self.sun = Sun()
+        self.sun.gamma_correct(self.gamma)
 
 app = App()

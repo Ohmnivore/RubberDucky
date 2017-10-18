@@ -30,6 +30,7 @@ struct Sun
 uniform Sun uSun;
 
 uniform vec3 uViewPosition;
+uniform float uGamma;
 
 void main()
 {
@@ -49,4 +50,7 @@ void main()
     vec3 specular = spec * uSun.specularStrength * uSun.specularColor * uMaterial.specularColor;
 
     fragColor = vec4(ambient + diffuse + specular + uMaterial.emissiveColor, uMaterial.alpha);
+
+    // apply gamma correction
+    fragColor.rgb = pow(fragColor.rgb, vec3(1.0 / uGamma));
 }

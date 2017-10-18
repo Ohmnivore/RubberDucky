@@ -1,11 +1,12 @@
 from pyrr import Vector3
 from OpenGL.GL import *
+from math_util import pow_vec_3D
 
 class Sun:
 
     def __init__(self):
         self.ambient_color = Vector3([1.0, 1.0, 1.0])
-        self.ambient_strength = 0.1
+        self.ambient_strength = 0.01
         self.diffuse_color = Vector3([1.0, 1.0, 1.0])
         self.diffuse_strength = 1.0
         self.specular_color = Vector3([1.0, 1.0, 1.0])
@@ -28,3 +29,8 @@ class Sun:
         glUniform3fv(specular_color_uni, 1, self.specular_color.tolist())
         glUniform1f(specular_strength_uni, self.specular_strength)
         glUniform3fv(light_direction_uni, 1, self.light_direction.tolist())
+
+    def gamma_correct(self, gamma):
+        pow_vec_3D(self.ambient_color, gamma)
+        pow_vec_3D(self.diffuse_color, gamma)
+        pow_vec_3D(self.specular_color, gamma)

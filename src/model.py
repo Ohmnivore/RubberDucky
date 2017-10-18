@@ -30,6 +30,7 @@ class Model:
         
         # Uploading to GPU
         for name, meshmtl in self.meshmtl_map.items():
+            meshmtl.mtl.gamma_correct(app.gamma)
             meshmtl.mesh.gen_buffers()
     
     def update(self, elapsed):
@@ -56,6 +57,10 @@ class Model:
 
         # Sun
         app.sun.bind_uniforms(program)
+
+        # Gamma
+        gamma_uni = glGetUniformLocation(program, 'uGamma')
+        glUniform1f(gamma_uni, app.gamma)
 
         for name, meshmtl in self.meshmtl_map.items():
             meshmtl.render(program)
