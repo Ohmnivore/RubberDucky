@@ -32,9 +32,9 @@ class MtlParser:
             self.cur_mtl = MaterialMesh()
             self.mtl_map[mtl_name] = self.cur_mtl
         elif word == 'Ns':
-            self.cur_mtl.mtl.specular_exponent = self.read_float() / 1000.0
+            self.cur_mtl.mtl.specular_exponent = self.read_float()
         elif word == 'd':
-            self.cur_mtl.mtl.alpha = 1.0 - self.read_float()
+            self.cur_mtl.mtl.alpha = self.read_float()
         elif word == 'Ka':
             self.cur_mtl.mtl.ambient_color = self.read_color()
         elif word == 'Kd':

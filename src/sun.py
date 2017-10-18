@@ -10,7 +10,7 @@ class Sun:
         self.diffuse_strength = 1.0
         self.specular_color = Vector3([1.0, 1.0, 1.0])
         self.specular_strength = 0.1
-        self.light_direction = Vector3([1.0, -1.0, 0.0])
+        self.light_direction = Vector3([1.0, -1.0, -0.5])
 
     def bind_uniforms(self, program):
         ambient_color_uni = glGetUniformLocation(program, 'uSun.ambientColor')
