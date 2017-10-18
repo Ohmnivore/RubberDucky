@@ -43,8 +43,8 @@ void main()
 
     // specular
     vec3 viewDir = normalize(uViewPosition - ourPosition);
-    vec3 reflectDir = reflect(lightDir, norm);  
-    float spec = pow(max(dot(viewDir, reflectDir), 0.0), uMaterial.specularExponent);
+    vec3 halfwayDir = normalize(-lightDir + viewDir);  
+    float spec = pow(max(dot(norm, halfwayDir), 0.0), uMaterial.specularExponent);
     vec3 specular = spec * uSun.specularStrength * uSun.specularColor * uMaterial.specularColor;
 
     fragColor = vec4(ambient + diffuse + specular, uMaterial.alpha);

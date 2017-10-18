@@ -52,7 +52,7 @@ class Model:
 
         # View position
         view_position_uni = glGetUniformLocation(program, 'uViewPosition')
-        glUniform3fv(view_position_uni, 1, camera.cam_pos.tolist())
+        glUniform3fv(view_position_uni, 1, camera.position.tolist())
 
         # Sun
         app.sun.bind_uniforms(program)
