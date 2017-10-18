@@ -5,24 +5,24 @@ from OpenGL.GL import *
 class Material:
 
     def __init__(self):
-        self.ambient = Vector3([0.0, 0.0, 0.0])
-        self.diffuse = Vector3([0.0, 0.0, 0.0])
-        self.specular = Vector3([0.0, 0.0, 0.0])
-        self.specularExponent = 0.0
+        self.ambient_color = Vector3([0.0, 0.0, 0.0])
+        self.diffuse_color = Vector3([0.0, 0.0, 0.0])
+        self.specular_color = Vector3([0.0, 0.0, 0.0])
+        self.specular_exponent = 0.0
         self.alpha = 0.0
     
-    def bindUniforms(self, program):
-        ambientUni = glGetUniformLocation(program, 'uMaterial.ambient')
-        diffuseUni = glGetUniformLocation(program, 'uMaterial.diffuse')
-        specularUni = glGetUniformLocation(program, 'uMaterial.specular')
-        specularExponentUni = glGetUniformLocation(program, 'uMaterial.specularExponent')
-        alphaUni = glGetUniformLocation(program, 'uMaterial.alpha')
+    def bind_uniforms(self, program):
+        ambient_uni = glGetUniformLocation(program, 'uMaterial.ambientColor')
+        diffuse_uni = glGetUniformLocation(program, 'uMaterial.diffuseColor')
+        specular_uni = glGetUniformLocation(program, 'uMaterial.specularColor')
+        specular_exponent_uni = glGetUniformLocation(program, 'uMaterial.specularExponent')
+        alpha_uni = glGetUniformLocation(program, 'uMaterial.alpha')
 
-        glUniform3fv(ambientUni, 1, self.ambient.tolist())
-        glUniform3fv(diffuseUni, 1, self.diffuse.tolist())
-        glUniform3fv(specularUni, 1, self.specular.tolist())
-        glUniform1f(specularExponentUni, self.specularExponent)
-        glUniform1f(alphaUni, self.alpha)
+        glUniform3fv(ambient_uni, 1, self.ambient_color.tolist())
+        glUniform3fv(diffuse_uni, 1, self.diffuse_color.tolist())
+        glUniform3fv(specular_uni, 1, self.specular_color.tolist())
+        glUniform1f(specular_exponent_uni, self.specular_exponent)
+        glUniform1f(alpha_uni, self.alpha)
 
     def destroy(self):
         pass
@@ -107,7 +107,7 @@ class MaterialMesh:
         self.mesh = Mesh()
 
     def render(self, program):
-        self.mtl.bindUniforms(program)
+        self.mtl.bind_uniforms(program)
         glBindVertexArray(self.mesh.vao)
         glDrawArrays(GL_TRIANGLES, 0, len(self.mesh.faces) * 3)
 
