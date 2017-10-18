@@ -7,7 +7,7 @@ import numpy
 class Camera:
 
     def __init__(self):
-        self.cam_pos = Vector3([0.0, 0.0, 0.0])
+        self.position = Vector3([0.0, 0.0, 0.0])
         self.horizontal_angle = numpy.pi
         self.vertical_angle = 0.0
         self.view = Matrix44.identity()
@@ -39,21 +39,21 @@ class Camera:
         up = Vector3.cross( right, direction )
 
         if app.keys[glfw.KEY_A]:
-            self.cam_pos -= right * self.movement_multiplier * elapsed
+            self.position -= right * self.movement_multiplier * elapsed
         elif app.keys[glfw.KEY_D]:
-            self.cam_pos += right * self.movement_multiplier * elapsed
+            self.position += right * self.movement_multiplier * elapsed
         if app.keys[glfw.KEY_W]:
-            self.cam_pos += direction * self.movement_multiplier * elapsed
+            self.position += direction * self.movement_multiplier * elapsed
         elif app.keys[glfw.KEY_S]:
-            self.cam_pos -= direction * self.movement_multiplier * elapsed
+            self.position -= direction * self.movement_multiplier * elapsed
         if app.keys[glfw.KEY_Q]:
-            self.cam_pos += up * self.movement_multiplier * elapsed
+            self.position += up * self.movement_multiplier * elapsed
         elif app.keys[glfw.KEY_E]:
-            self.cam_pos -= up * self.movement_multiplier * elapsed
+            self.position -= up * self.movement_multiplier * elapsed
 
         self.view = Matrix44.look_at(
-            self.cam_pos,
-            self.cam_pos + direction,
+            self.position,
+            self.position + direction,
             up
         )
 
