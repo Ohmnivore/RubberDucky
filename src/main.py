@@ -3,7 +3,6 @@ from OpenGL.GL import *
 from app import app
 from camera import Camera
 from fly_state import FlyState
-import time
 
 def on_key(window, key, scancode, action, mods):
     if action == glfw.PRESS or action == glfw.REPEAT:
@@ -57,7 +56,7 @@ def main():
     glClearColor(1.0, 1.0, 1.0, 1.0)
 
     # Timing
-    last_frame_time = time.clock()
+    last_frame_time = glfw.get_time()
     time_since_last_render = 0.0
 
     # Statistics
@@ -72,7 +71,7 @@ def main():
             glfw.set_window_should_close(window, True)
 
         # Timing
-        cur_frame_time = time.clock()
+        cur_frame_time = glfw.get_time()
         elapsed = cur_frame_time - last_frame_time
         time_since_last_render += elapsed
         last_frame_time = cur_frame_time
