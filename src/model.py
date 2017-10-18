@@ -12,24 +12,24 @@ class Model:
         self.orientation = Quaternion()
         self.meshmtl_map = None
 
-    def loadObj(self, filepath):
+    def load_obj(self, filepath):
         # Reading source files
         obj_path = filepath
         mtl_path = path.splitext(filepath)[0] + '.mtl'
 
         mtl_parser = MtlParser()
         with open(mtl_path) as mtl_file:
-            mtl_parser.parseString(mtl_file.read())
+            mtl_parser.parse_string(mtl_file.read())
         
         obj_parser = ObjParser()
         with open(obj_path) as obj_file:
-            obj_parser.parseString(mtl_parser.mtl_map, obj_file.read())
+            obj_parser.parse_string(mtl_parser.mtl_map, obj_file.read())
         
         self.meshmtl_map = obj_parser.mtl_map
         
         # Uploading to GPU
         for name, meshmtl in self.meshmtl_map.items():
-            meshmtl.mesh.genBuffers()
+            meshmtl.mesh.gen_buffers()
     
     def update(self, elapsed):
         pass

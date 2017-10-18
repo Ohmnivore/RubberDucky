@@ -22,17 +22,17 @@ class FlyState(State):
 
         self.girl = Model()
         self.entities.append(self.girl)
-        self.girl.loadObj('assets/low poly girl/low poly girl.obj')
+        self.girl.load_obj('assets/low poly girl/low poly girl.obj')
         self.girl.pos += [0.0, 0.0, 8.0]
 
         self.teapot = Model()
         self.entities.append(self.teapot)
-        self.teapot.loadObj('assets/teapot/teapot.obj')
+        self.teapot.load_obj('assets/teapot/teapot.obj')
         self.teapot.pos += [-8.0, 0.0, 0.0]
 
         self.triangle = Model()
         self.entities.append(self.triangle)
-        self.triangle.loadObj('assets/triangle/triangle.obj')
+        self.triangle.load_obj('assets/triangle/triangle.obj')
         self.triangle.pos += [8.0, 0.0, 0.0]
 
     def update(self, elapsed):

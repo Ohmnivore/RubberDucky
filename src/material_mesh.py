@@ -44,7 +44,7 @@ class Mesh:
         self.vbo = None
         self.vao = None
     
-    def genBuffers(self):
+    def gen_buffers(self):
         self.vao = glGenVertexArrays(1)
         glBindVertexArray(self.vao)
 
@@ -73,7 +73,7 @@ class Mesh:
 
             faceIdx += 1
         
-        self.vbo = self.genBuffer(flat_list)
+        self.vbo = self.gen_buffer(flat_list)
 
         glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * 4, ctypes.c_void_p(0 * 4))
         glEnableVertexAttribArray(0)
@@ -88,7 +88,7 @@ class Mesh:
         glDisableVertexAttribArray(1)
         glDisableVertexAttribArray(2)
     
-    def genBuffer(self, flat_list):
+    def gen_buffer(self, flat_list):
         buffer = glGenBuffers(1)
         glBindBuffer(GL_ARRAY_BUFFER, buffer)
 
