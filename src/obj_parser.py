@@ -32,9 +32,9 @@ class MtlParser:
             self.cur_mtl = MaterialMesh()
             self.mtl_map[mtl_name] = self.cur_mtl
         elif word == 'Ns':
-            self.cur_mtl.mtl.specular_exponent = self.read_number()
+            self.cur_mtl.mtl.specular_exponent = self.read_float() / 1000.0
         elif word == 'd':
-            self.cur_mtl.mtl.alpha = 1.0 - self.read_number()
+            self.cur_mtl.mtl.alpha = 1.0 - self.read_float()
         elif word == 'Ka':
             self.cur_mtl.mtl.ambient_color = self.read_color()
         elif word == 'Kd':
@@ -49,7 +49,7 @@ class MtlParser:
             return None
         return self.words[self.cur_word]
 
-    def read_number(self):
+    def read_float(self):
         word = self.seek_next_word()
         try:
             ret = float(word)
@@ -59,7 +59,7 @@ class MtlParser:
             return None
 
     def read_color(self):
-        return Vector3([self.read_number(), self.read_number(), self.read_number()])
+        return Vector3([self.read_float(), self.read_float(), self.read_float()])
 
 class ObjParser:
 
@@ -116,7 +116,7 @@ class ObjParser:
             return None
         return self.words[self.cur_word]
 
-    def read_number(self):
+    def read_float(self):
         word = self.seek_next_word()
         try:
             ret = float(word)
@@ -126,10 +126,10 @@ class ObjParser:
             return None
 
     def read_vector_3D(self):
-        return [self.read_number(), self.read_number(), self.read_number()]
+        return [self.read_float(), self.read_float(), self.read_float()]
 
     def read_vector_2D(self):
-        return [self.read_number(), self.read_number()]
+        return [self.read_float(), self.read_float()]
 
     def read_face(self):
         face = Face()

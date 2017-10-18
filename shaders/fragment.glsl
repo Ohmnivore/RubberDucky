@@ -47,5 +47,5 @@ void main()
     float spec = pow(max(dot(viewDir, reflectDir), 0.0), uMaterial.specularExponent);
     vec3 specular = spec * uSun.specularStrength * uSun.specularColor * uMaterial.specularColor;
 
-    fragColor = vec4(ambient + diffuse, uMaterial.alpha);
+    fragColor = vec4(ambient + diffuse + specular, uMaterial.alpha);
 }
