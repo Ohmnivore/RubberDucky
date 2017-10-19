@@ -66,7 +66,6 @@ def main():
     # Setup OpenGL global config
     glEnable(GL_MULTISAMPLE)
     glEnable(GL_DEPTH_TEST)
-    glClearColor(1.0, 1.0, 1.0, 1.0)
 
     # Timing
     last_frame_time = glfw.get_time()
@@ -105,6 +104,7 @@ def main():
             frames_since_last_report += 1
 
             # Clear screen
+            glClearColor(app.bg_color[0], app.bg_color[1], app.bg_color[2], 1.0)
             glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
 
             # Manage state and camera

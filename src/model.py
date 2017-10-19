@@ -39,9 +39,8 @@ class Model:
     def render(self, opaque, elapsed, camera, program):
         # Model matrix
         model = Matrix44.from_scale(self.scale)
-        model = model * self.orientation
         translation = Matrix44.from_translation(self.pos)
-        model = model * translation
+        model = translation * self.orientation * model
 
         # MVP matrix
         glUniformMatrix4fv(program.uModel, 1, GL_FALSE, model.tolist())

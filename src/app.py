@@ -15,6 +15,7 @@ class App:
         self.near = 0.1
         self.far = 1000.0
         self.gamma = 2.2
+        self.bg_color = Vector3([1.0, 1.0, 1.0])
         self.camera = None # A default camera is created by main.py
 
         # Aspect ratio
