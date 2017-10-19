@@ -27,9 +27,6 @@ class Program:
 
         # Sun uniforms
         self.uSun_ambientColor =            glGetUniformLocation(gl_program, 'uSun.ambientColor')
-        self.uSun_ambientStrength =         glGetUniformLocation(gl_program, 'uSun.ambientStrength')
         self.uSun_diffuseColor =            glGetUniformLocation(gl_program, 'uSun.diffuseColor')
-        self.uSun_diffuseStrength =         glGetUniformLocation(gl_program, 'uSun.diffuseStrength')
         self.uSun_specularColor =           glGetUniformLocation(gl_program, 'uSun.specularColor')
-        self.uSun_specularStrength =        glGetUniformLocation(gl_program, 'uSun.specularStrength')
         self.uSun_lightDirection =          glGetUniformLocation(gl_program, 'uSun.lightDirection')

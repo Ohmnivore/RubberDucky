@@ -14,12 +14,9 @@ class Sun:
         self.light_direction = Vector3([1.0, -1.0, -0.5])
 
     def bind_uniforms(self, program):
-        glUniform3fv(program.uSun_ambientColor, 1,      self.ambient_color.tolist())
-        glUniform1f(program.uSun_ambientStrength,       self.ambient_strength)
-        glUniform3fv(program.uSun_diffuseColor, 1,      self.diffuse_color.tolist())
-        glUniform1f(program.uSun_diffuseStrength,       self.diffuse_strength)
-        glUniform3fv(program.uSun_specularColor, 1,     self.specular_color.tolist())
-        glUniform1f(program.uSun_specularStrength,      self.specular_strength)
+        glUniform3fv(program.uSun_ambientColor, 1,      (self.ambient_color * self.ambient_strength).tolist())
+        glUniform3fv(program.uSun_diffuseColor, 1,      (self.diffuse_color * self.diffuse_strength).tolist())
+        glUniform3fv(program.uSun_specularColor, 1,     (self.specular_color * self.specular_strength).tolist())
         glUniform3fv(program.uSun_lightDirection, 1,    self.light_direction.tolist())
 
     def gamma_correct(self, gamma):
