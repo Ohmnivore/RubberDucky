@@ -47,7 +47,7 @@ class Mesh:
         self.vbo = None
         self.vao = None
     
-    def gen_buffers(self):
+    def gen_buffers(self, force_flat_shading):
         self.vao = glGenVertexArrays(1)
         glBindVertexArray(self.vao)
 
@@ -58,7 +58,7 @@ class Mesh:
             # Generate normal from vertices if doesn't exist
             # Gives it flat shading: all three vertices have the face's normal
             normal = [0.0, 0.0, 0.0]
-            if len(face.normals) == 0:
+            if force_flat_shading or len(face.normals) == 0:
                 p0 = self.vertices[face.vertices[0]]
                 p1 = self.vertices[face.vertices[1]]
                 p2 = self.vertices[face.vertices[2]]
@@ -74,7 +74,7 @@ class Mesh:
                 texcoords = [0.0, 0.0]
                 if len(face.texcoords) > i:
                     texcoords = self.texcoords[face.texcoords[i]]
-                if len(face.normals) > i:
+                if not force_flat_shading and len(face.normals) > i:
                     normal = self.normals[face.normals[i]]
                 
                 flat_list.append(vertex[0])

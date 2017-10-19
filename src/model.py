@@ -31,7 +31,7 @@ class Model:
         # Uploading to GPU
         for name, meshmtl in self.meshmtl_map.items():
             meshmtl.mtl.gamma_correct(app.gamma)
-            meshmtl.mesh.gen_buffers()
+            meshmtl.mesh.gen_buffers(app.force_flat_shading)
     
     def update(self, elapsed):
         pass
