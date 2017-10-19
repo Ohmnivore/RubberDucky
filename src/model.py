@@ -44,23 +44,18 @@ class Model:
         model = model * translation
 
         # MVP matrix
-        model_uni = glGetUniformLocation(program, 'uModel')
-        view_uni = glGetUniformLocation(program, 'uView')
-        projection_uni = glGetUniformLocation(program, 'uProjection')
-        glUniformMatrix4fv(model_uni, 1, GL_FALSE, model.tolist())
-        glUniformMatrix4fv(view_uni, 1, GL_FALSE, camera.view.tolist())
-        glUniformMatrix4fv(projection_uni, 1, GL_FALSE, camera.projection.tolist())
+        glUniformMatrix4fv(program.uModel, 1, GL_FALSE, model.tolist())
+        glUniformMatrix4fv(program.uView, 1, GL_FALSE, camera.view.tolist())
+        glUniformMatrix4fv(program.uProjection, 1, GL_FALSE, camera.projection.tolist())
 
         # View position
-        view_position_uni = glGetUniformLocation(program, 'uViewPosition')
-        glUniform3fv(view_position_uni, 1, camera.position.tolist())
+        glUniform3fv(program.uViewPosition, 1, camera.position.tolist())
 
         # Sun
         app.sun.bind_uniforms(program)
 
         # Gamma
-        gamma_uni = glGetUniformLocation(program, 'uGamma')
-        glUniform1f(gamma_uni, app.gamma)
+        glUniform1f(program.uGamma, app.gamma)
 
         for name, meshmtl in self.meshmtl_map.items():
             if opaque and meshmtl.mtl.alpha == 1.0:

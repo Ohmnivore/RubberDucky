@@ -1,5 +1,6 @@
 from state import State
 from model import Model
+from program import Program
 from OpenGL.GL import *
 from OpenGL.GL import shaders
 
@@ -18,7 +19,8 @@ class FlyState(State):
             fragment_shader_src = fragment_file.read()
         fragment_shader = shaders.compileShader(fragment_shader_src, GL_FRAGMENT_SHADER)
 
-        self.shader = shaders.compileProgram(vertex_shader, fragment_shader)
+        gl_program = shaders.compileProgram(vertex_shader, fragment_shader)
+        self.program = Program(gl_program)
 
         self.girl = Model()
         self.entities.append(self.girl)
@@ -39,8 +41,8 @@ class FlyState(State):
         super(FlyState, self).update(elapsed)
 
     def render(self, elapsed, camera):
-        glUseProgram(self.shader)
-        super(FlyState, self).render(elapsed, camera, self.shader)
+        glUseProgram(self.program.gl_program)
+        super(FlyState, self).render(elapsed, camera, self.program)
         glUseProgram(0)
 
     def destroy(self):

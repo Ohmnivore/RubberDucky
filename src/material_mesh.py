@@ -14,19 +14,12 @@ class Material:
         self.alpha = 0.0
     
     def bind_uniforms(self, program):
-        ambient_uni = glGetUniformLocation(program, 'uMaterial.ambientColor')
-        diffuse_uni = glGetUniformLocation(program, 'uMaterial.diffuseColor')
-        specular_uni = glGetUniformLocation(program, 'uMaterial.specularColor')
-        specular_exponent_uni = glGetUniformLocation(program, 'uMaterial.specularExponent')
-        alpha_uni = glGetUniformLocation(program, 'uMaterial.alpha')
-        emissive_color_uni = glGetUniformLocation(program, 'uMaterial.emissiveColor')
-
-        glUniform3fv(ambient_uni, 1, self.ambient_color.tolist())
-        glUniform3fv(diffuse_uni, 1, self.diffuse_color.tolist())
-        glUniform3fv(specular_uni, 1, self.specular_color.tolist())
-        glUniform1f(specular_exponent_uni, self.specular_exponent)
-        glUniform3fv(emissive_color_uni, 1, self.emissive_color.tolist())
-        glUniform1f(alpha_uni, self.alpha)
+        glUniform3fv(program.uMaterial_ambientColor, 1,     self.ambient_color.tolist())
+        glUniform3fv(program.uMaterial_diffuseColor, 1,     self.diffuse_color.tolist())
+        glUniform3fv(program.uMaterial_specularColor, 1,    self.specular_color.tolist())
+        glUniform1f(program.uMaterial_specularExponent,     self.specular_exponent)
+        glUniform3fv(program.uMaterial_emissiveColor, 1,    self.emissive_color.tolist())
+        glUniform1f(program.uMaterial_alpha,                self.alpha)
 
     def gamma_correct(self, gamma):
         pow_vec_3D(self.ambient_color, gamma)
