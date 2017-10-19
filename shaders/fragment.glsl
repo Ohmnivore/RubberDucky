@@ -31,16 +31,16 @@ uniform float uGamma;
 
 void main()
 {
-    // ambient
+    // Ambient
     vec3 ambient = uSun.ambientColor * uMaterial.ambientColor;
 
-    // diffuse 
+    // Diffuse 
     vec3 norm = normalize(ourNormal);
     vec3 lightDir = normalize(uSun.lightDirection);
     float diff = max(dot(norm, -lightDir), 0.0);
     vec3 diffuse = diff * uSun.diffuseColor * uMaterial.diffuseColor;
 
-    // specular
+    // Specular
     vec3 viewDir = normalize(uViewPosition - ourPosition);
     vec3 halfwayDir = normalize(-lightDir + viewDir);  
     float spec = pow(max(dot(norm, halfwayDir), 0.0), uMaterial.specularExponent);
@@ -48,6 +48,6 @@ void main()
 
     fragColor = vec4(ambient + diffuse + specular + uMaterial.emissiveColor, uMaterial.alpha);
 
-    // apply gamma correction
+    // Apply gamma correction
     fragColor.rgb = pow(fragColor.rgb, vec3(1.0 / uGamma));
 }
