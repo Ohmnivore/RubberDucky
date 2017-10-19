@@ -1,5 +1,5 @@
 from pyrr import Vector3
-from material_mesh import MaterialMesh, Face
+from ducky.material_mesh import MaterialMesh, Face
 
 class MtlParser:
 

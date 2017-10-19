@@ -1,6 +1,6 @@
 from pyrr import Vector3
 from OpenGL.GL import *
-from math_util import pow_vec_3D
+from ducky.math_util import pow_vec_3D
 
 class Sun:
 

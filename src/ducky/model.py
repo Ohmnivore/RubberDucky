@@ -1,8 +1,8 @@
 from pyrr import Vector3, Matrix44, Quaternion
 import os.path as path
-from obj_parser import MtlParser, ObjParser
+from ducky.obj_parser import MtlParser, ObjParser
 from OpenGL.GL import *
-from app import app
+from ducky.app import app
 
 class Model:
 

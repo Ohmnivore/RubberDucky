@@ -5,6 +5,9 @@ class State:
     def __init__(self):
         self.entities = []
 
+    def create(self):
+        pass
+
     def update(self, elapsed):
         for entity in self.entities:
             entity.update(elapsed)

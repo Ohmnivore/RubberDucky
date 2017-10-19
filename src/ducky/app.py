@@ -1,11 +1,11 @@
-from sun import Sun
+from ducky.sun import Sun
 from pyrr import Vector3
 import glfw
 
 class App:
 
     def __init__(self):
-        self.window = None # Set by main.py
+        self.window = None # Set by start_app()
 
         self.fullscreen = False
         self.width = 1280
@@ -17,7 +17,7 @@ class App:
         self.gamma = 2.2
         self.bg_color = Vector3([1.0, 1.0, 1.0])
         self.force_flat_shading = True
-        self.camera = None # A default camera is created by main.py
+        self.camera = None # A default camera is created by start_app()
 
         # Aspect ratio
         self.aspect_ratio = self.width / self.height
