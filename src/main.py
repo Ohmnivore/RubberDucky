@@ -10,6 +10,16 @@ def on_key(window, key, scancode, action, mods):
     elif action == glfw.RELEASE:
         app.keys[key] = False
 
+def on_mouse_btn(window, btn, action, mods):
+    if action == glfw.PRESS or action == glfw.REPEAT:
+        app.mouse_btns[btn] = True
+    elif action == glfw.RELEASE:
+        app.mouse_btns[btn] = False
+
+def on_cursor_pos(window, x, y):
+    app.mouse_pos.x = x
+    app.mouse_pos.y = y
+
 def on_resize(window, width, height):
     app.width = width
     app.height = height
@@ -41,12 +51,15 @@ def main():
     glfw.make_context_current(window)
 
     # Register handlers
-    glfw.set_window_size_callback(window, on_resize)
     glfw.set_key_callback(window, on_key)
+    glfw.set_mouse_button_callback(window, on_mouse_btn)
+    glfw.set_cursor_pos_callback(window, on_cursor_pos)
+    glfw.set_window_size_callback(window, on_resize)
     glfw.swap_interval(0) # Remove v-sync
     glfw.set_input_mode(window, glfw.CURSOR, glfw.CURSOR_DISABLED) # Disable cursor
 
     # Create state and camera
+    app.window = window
     app.camera = Camera()
     state = FlyState()
 
