@@ -47,7 +47,7 @@ def main():
     glfw.set_input_mode(window, glfw.CURSOR, glfw.CURSOR_DISABLED) # Disable cursor
 
     # Create state and camera
-    camera = Camera()
+    app.camera = Camera()
     state = FlyState()
 
     # Setup OpenGL global config
@@ -95,9 +95,9 @@ def main():
             glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
 
             # Manage state and camera
-            camera.update(time_since_last_render)
+            app.camera.update(time_since_last_render)
             state.update(time_since_last_render)
-            state.render(time_since_last_render, camera)
+            state.render(time_since_last_render, app.camera)
             time_since_last_render = 0.0
 
             # Poll for and process events

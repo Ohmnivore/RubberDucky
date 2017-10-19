@@ -11,6 +11,7 @@ class App:
         self.near = 0.1
         self.far = 1000.0
         self.gamma = 2.2
+        self.camera = None
 
         self.aspect_ratio = self.width / self.height
         self.keys = []

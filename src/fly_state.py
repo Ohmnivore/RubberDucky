@@ -1,6 +1,8 @@
 from state import State
 from model import Model
 from program import Program
+from app import app
+from fly_camera import FlyCamera
 from OpenGL.GL import *
 from OpenGL.GL import shaders
 
@@ -22,6 +24,8 @@ class FlyState(State):
         gl_program = shaders.compileProgram(vertex_shader, fragment_shader)
         self.program = Program(gl_program)
 
+        app.camera = FlyCamera()
+
         self.girl = Model()
         self.entities.append(self.girl)
         self.girl.load_obj('assets/low poly girl/low poly girl.obj')
@@ -31,11 +35,6 @@ class FlyState(State):
         self.entities.append(self.teapot)
         self.teapot.load_obj('assets/teapot/teapot.obj')
         self.teapot.pos += [-8.0, 0.0, -24.0]
-
-        # self.triangle = Model()
-        # self.entities.append(self.triangle)
-        # self.triangle.load_obj('assets/triangle/triangle.obj')
-        # self.triangle.pos += [8.0, 0.0, 0.0]
 
     def update(self, elapsed):
         super(FlyState, self).update(elapsed)
