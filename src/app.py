@@ -8,7 +8,7 @@ class App:
         self.window = None # Set by main.py
 
         self.fullscreen = False
-        self.width = 1080
+        self.width = 1280
         self.height = 720
         self.max_fps = -1.0
         self.fov = 45.0
