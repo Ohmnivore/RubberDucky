@@ -7,8 +7,9 @@ class Program:
 
         # MVP
         self.uModel =                       glGetUniformLocation(gl_program, 'uModel')
+        self.uTransposeInverseModel =       glGetUniformLocation(gl_program, 'uTransposeInverseModel')
         self.uView =                        glGetUniformLocation(gl_program, 'uView')
-        self.uProjection =                  glGetUniformLocation(gl_program, 'uProjection')
+        self.uProjectionView =              glGetUniformLocation(gl_program, 'uProjectionView')
 
         # Gamma
         self.uGamma =                       glGetUniformLocation(gl_program, 'uGamma')

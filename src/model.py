@@ -44,8 +44,9 @@ class Model:
 
         # MVP matrix
         glUniformMatrix4fv(program.uModel, 1, GL_FALSE, model.tolist())
+        glUniformMatrix4fv(program.uTransposeInverseModel, 1, GL_FALSE, model.inverse.transpose().tolist())
         glUniformMatrix4fv(program.uView, 1, GL_FALSE, camera.view.tolist())
-        glUniformMatrix4fv(program.uProjection, 1, GL_FALSE, camera.projection.tolist())
+        glUniformMatrix4fv(program.uProjectionView, 1, GL_FALSE, (camera.projection * camera.view).tolist())
 
         # View position
         glUniform3fv(program.uViewPosition, 1, camera.position.tolist())
