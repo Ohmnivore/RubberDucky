@@ -3,6 +3,7 @@ from OpenGL.GL import *
 from app import app
 from camera import Camera
 from fly_state import FlyState
+from icons import set_icons
 
 def on_key(window, key, scancode, action, mods):
     if action == glfw.PRESS or action == glfw.REPEAT:
@@ -57,6 +58,9 @@ def main():
     glfw.set_window_size_callback(window, on_resize)
     glfw.swap_interval(0) # Remove v-sync
     glfw.set_input_mode(window, glfw.CURSOR, glfw.CURSOR_DISABLED) # Disable cursor
+
+    # Set window icons
+    set_icons(window)
 
     # Create state and camera
     app.window = window
