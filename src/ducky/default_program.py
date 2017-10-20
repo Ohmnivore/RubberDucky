@@ -49,4 +49,16 @@ class DefaultProgram(Program):
         # Bind gamma
         glUniform1f(self.uGamma, app.gamma)
 
-        model.render_meshmtls(opaque, self)
+        self.render_meshmtls(self.render_meshmtl, model, opaque)
+
+    def render_meshmtls(self, cb_func, model, opaque):
+        for name, meshmtl in model.meshmtl_map.items():
+            if opaque and meshmtl.mtl.alpha == 1.0:
+                cb_func(meshmtl)
+            elif not opaque and meshmtl.mtl.alpha < 1.0:
+                cb_func(meshmtl)
+
+    def render_meshmtl(self, meshmtl):
+        meshmtl.mtl.bind_uniforms(self)
+        glBindVertexArray(meshmtl.mesh.vao)
+        glDrawArrays(GL_TRIANGLES, 0, len(meshmtl.mesh.faces) * 3)

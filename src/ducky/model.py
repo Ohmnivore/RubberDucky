@@ -48,13 +48,6 @@ class Model:
     def bind_essential_matrices(self, program, camera):
         glUniformMatrix4fv(program.uModel, 1, GL_FALSE, self.model.tolist())
         glUniformMatrix4fv(program.uProjectionView, 1, GL_FALSE, camera.projection_view.tolist())
-
-    def render_meshmtls(self, opaque, program):
-        for name, meshmtl in self.meshmtl_map.items():
-            if opaque and meshmtl.mtl.alpha == 1.0:
-                meshmtl.render(program)
-            elif not opaque and meshmtl.mtl.alpha < 1.0:
-                meshmtl.render(program)
     
     def destroy(self):
         for name, meshmtl in self.meshmtl_map.items():

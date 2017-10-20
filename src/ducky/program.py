@@ -6,6 +6,9 @@ class Program:
     def __init__(self):
         self.gl_program = None
 
+    def destroy(self):
+        glDeleteProgram(self.gl_program)
+
     def load_files(self, vertex_path, fragment_path):
         vertex_shader_src = ''
         with open(vertex_path) as vertex_file:
@@ -26,4 +29,10 @@ class Program:
         glUseProgram(self.gl_program)
 
     def load_uniform_locations(self, gl_program):
+        pass
+
+    def render_meshmtls(self, cb_func, model, opaque):
+        pass
+
+    def render_meshmtl(self, meshmtl):
         pass

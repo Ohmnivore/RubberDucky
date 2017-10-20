@@ -15,14 +15,6 @@ class OutlineStencilProgram(Program):
         self.uModel =                       glGetUniformLocation(gl_program, 'uModel')
         self.uProjectionView =              glGetUniformLocation(gl_program, 'uProjectionView')
 
-        # Material uniforms
-        self.uMaterial_ambientColor =       glGetUniformLocation(gl_program, 'uMaterial.ambientColor')
-        self.uMaterial_diffuseColor =       glGetUniformLocation(gl_program, 'uMaterial.diffuseColor')
-        self.uMaterial_specularColor =      glGetUniformLocation(gl_program, 'uMaterial.specularColor')
-        self.uMaterial_specularExponent =   glGetUniformLocation(gl_program, 'uMaterial.specularExponent')
-        self.uMaterial_alpha =              glGetUniformLocation(gl_program, 'uMaterial.alpha')
-        self.uMaterial_emissiveColor =      glGetUniformLocation(gl_program, 'uMaterial.emissiveColor')
-
     def render_model(self, model, opaque, elapsed, camera):
         glClear(GL_STENCIL_BUFFER_BIT)
 
@@ -40,8 +32,12 @@ class OutlineStencilProgram(Program):
 
         self.use()
         model.bind_essential_matrices(self, camera)
-        model.render_meshmtls(opaque, self)
+        self.main_program.render_meshmtls(self.render_meshmtl, model, opaque)
 
         glDisable(GL_STENCIL_TEST)
         glStencilMask(0xFF)
         glPolygonMode( GL_FRONT_AND_BACK, GL_FILL )
+
+    def render_meshmtl(self, meshmtl):
+        glBindVertexArray(meshmtl.mesh.vao)
+        glDrawArrays(GL_TRIANGLES, 0, len(meshmtl.mesh.faces) * 3)

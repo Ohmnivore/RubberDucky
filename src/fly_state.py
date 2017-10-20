@@ -66,3 +66,5 @@ class FlyState(State):
 
     def destroy(self):
         super(FlyState, self).destroy()
+        self.default_program.destroy()
+        self.outline_program.destroy()

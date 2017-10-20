@@ -1,6 +1,4 @@
 # TODO
-* Make uniform map dynamically
-* UBOs for global state
 * justPressed/justReleased
 * rotation camera mode
 * render to/from textures

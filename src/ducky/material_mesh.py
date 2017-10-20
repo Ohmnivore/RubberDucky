@@ -123,11 +123,6 @@ class MaterialMesh:
         self.mtl = Material()
         self.mesh = Mesh()
 
-    def render(self, program):
-        self.mtl.bind_uniforms(program)
-        glBindVertexArray(self.mesh.vao)
-        glDrawArrays(GL_TRIANGLES, 0, len(self.mesh.faces) * 3)
-
     def destroy(self):
         self.mesh.destroy()
         self.mtl.destroy()
