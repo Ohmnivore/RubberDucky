@@ -27,9 +27,13 @@ class App:
         # Mouse input
         self.mouse_pos = Vector3([0.0, 0.0, 0.0])
         self.mouse_btns = np.full(glfw.MOUSE_BUTTON_LAST, False)
+        self.mouse_btns_pressed = np.full(glfw.MOUSE_BUTTON_LAST, False)
+        self.mouse_btns_released = np.full(glfw.MOUSE_BUTTON_LAST, False)
 
         # Keyboard input
         self.keys = np.full(glfw.KEY_LAST, False)
+        self.keys_pressed = np.full(glfw.KEY_LAST, False)
+        self.keys_released = np.full(glfw.KEY_LAST, False)
 
         # Global lighting
         self.sun = Sun()
@@ -42,6 +46,10 @@ class App:
     def update(self, elapsed):
         self.camera.update(elapsed)
         self.state.update(elapsed)
+        self.mouse_btns_pressed.fill(False)
+        self.mouse_btns_released.fill(False)
+        self.keys_pressed.fill(False)
+        self.keys_released.fill(False)
 
     def render(self, elapsed):
         self.camera.pre_render(elapsed)

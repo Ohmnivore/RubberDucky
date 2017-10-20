@@ -6,15 +6,25 @@ from ducky.camera import Camera
 from ducky.icons import set_icons
 
 def on_key(window, key, scancode, action, mods):
+    was_pressed = app.keys[key]
     if action == glfw.PRESS or action == glfw.REPEAT:
+        if not was_pressed:
+            app.keys_pressed[key] = True
         app.keys[key] = True
     elif action == glfw.RELEASE:
+        if was_pressed:
+            app.keys_released[key] = True
         app.keys[key] = False
 
 def on_mouse_btn(window, btn, action, mods):
+    was_pressed = app.mouse_btns[btn]
     if action == glfw.PRESS or action == glfw.REPEAT:
+        if not was_pressed:
+            app.mouse_btns_pressed[btn] = True
         app.mouse_btns[btn] = True
     elif action == glfw.RELEASE:
+        if was_pressed:
+            app.mouse_btns_released[btn] = True
         app.mouse_btns[btn] = False
 
 def on_cursor_pos(window, x, y):
