@@ -33,7 +33,7 @@ class FlyState(State):
         app.camera = FlyCamera()
         app.bg_color.xyz = [0.83, 0.80, 0.75]
 
-        self.car = Model()
+        self.car = OutlineModelStencil()
         self.entities.append(self.car)
         self.car.load_obj('assets/car/car.obj')
         self.car.pos += [14.0, 0.0, -28.0]

@@ -23,6 +23,8 @@ class OutlineModelStencil(Model):
         self.outline_program = Program(gl_program)
 
     def render(self, opaque, elapsed, camera, program):
+        glClear(GL_STENCIL_BUFFER_BIT)
+
         glEnable(GL_STENCIL_TEST)
         glStencilFunc(GL_ALWAYS, 0x01, 0x01)
         glStencilOp(GL_KEEP, GL_KEEP, GL_REPLACE)

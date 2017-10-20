@@ -46,7 +46,7 @@ void main()
     float spec = pow(max(dot(norm, halfwayDir), 0.0), uMaterial.specularExponent);
     vec3 specular = spec * uSun.specularColor * uMaterial.specularColor;
 
-    fragColor = vec4(ambient + diffuse + specular + uMaterial.emissiveColor, uMaterial.alpha) * 0.2;
+    fragColor = vec4(ambient + diffuse + specular + uMaterial.emissiveColor, uMaterial.alpha) * 0.0000001;
 
     // Apply gamma correction
     fragColor.rgb = pow(fragColor.rgb, vec3(1.0 / uGamma));
