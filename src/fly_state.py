@@ -22,6 +22,8 @@ class FlyState(State):
         self.outline_program = OutlineStencilProgram(self.default_program)
         self.outline_program.load_files('shaders/outline_stencil.vert.glsl', 'shaders/outline_stencil.frag.glsl')
 
+        self.program = self.outline_program
+
         app.camera = FlyCamera()
         app.camera.position += [0.0, 6, 0.0]
         app.bg_color.xyz = [0.83, 0.80, 0.75]
@@ -51,7 +53,7 @@ class FlyState(State):
     def render(self, elapsed, camera):
         # Opaque render pass first, then transparent
         for entity in self.entities:
-            self.outline_program.render_model(entity, True, elapsed, camera)
+            self.program.render_model(entity, True, elapsed, camera)
 
         glDepthMask(GL_FALSE)
         glEnable(GL_CULL_FACE)
@@ -59,7 +61,7 @@ class FlyState(State):
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
 
         for entity in self.entities:
-            self.outline_program.render_model(entity, False, elapsed, camera)
+            self.program.render_model(entity, False, elapsed, camera)
 
         glDepthMask(GL_TRUE)
         glDisable(GL_CULL_FACE)

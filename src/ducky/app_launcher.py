@@ -95,6 +95,8 @@ def start_app(state):
     report_timer = 0.0
     frames_since_last_report = 0
     max_elapsed = 0.0
+    total_frames = 0
+    start_time = last_frame_time
 
     # Loop until the user closes the window
     while not glfw.window_should_close(window):
@@ -121,6 +123,7 @@ def start_app(state):
                 max_elapsed = 0.0
                 frames_since_last_report = 0.0
             frames_since_last_report += 1
+            total_frames += 1
 
             # Clear screen
             glClearColor(app.bg_color[0], app.bg_color[1], app.bg_color[2], 1.0)
@@ -139,6 +142,12 @@ def start_app(state):
                 glfw.swap_buffers(window)
             else:
                 glFinish()
+
+    # Display average FPS
+    total_elapsed = glfw.get_time() - start_time
+    avg_fps = total_frames / total_elapsed
+    avg_ms = 1.0 / avg_fps
+    print('Avg FPS: {:.2f}    Avg elapsed: {:.4f}'.format(avg_fps, avg_ms))
 
     # Shutdown
     state.destroy()
