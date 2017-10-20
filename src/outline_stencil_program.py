@@ -31,7 +31,8 @@ class OutlineStencilProgram(Program):
         glPolygonMode( GL_FRONT_AND_BACK, GL_LINE )
 
         self.use()
-        model.bind_essential_matrices(self, camera)
+        glUniformMatrix4fv(self.uModel, 1, GL_FALSE, model.model.tolist())
+        glUniformMatrix4fv(self.uProjectionView, 1, GL_FALSE, camera.projection_view.tolist())
         self.main_program.render_meshmtls(self.render_meshmtl, model, opaque)
 
         glDisable(GL_STENCIL_TEST)

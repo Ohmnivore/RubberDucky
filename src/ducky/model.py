@@ -1,6 +1,5 @@
 import os.path as path
 
-from OpenGL.GL import *
 from pyrr import Vector3, Matrix44, Quaternion
 
 from ducky.app import app
@@ -44,10 +43,6 @@ class Model:
         self.model = Matrix44.from_scale(self.scale)
         translation = Matrix44.from_translation(self.pos)
         self.model = translation * self.orientation * self.model
-
-    def bind_essential_matrices(self, program, camera):
-        glUniformMatrix4fv(program.uModel, 1, GL_FALSE, self.model.tolist())
-        glUniformMatrix4fv(program.uProjectionView, 1, GL_FALSE, camera.projection_view.tolist())
     
     def destroy(self):
         for name, meshmtl in self.meshmtl_map.items():

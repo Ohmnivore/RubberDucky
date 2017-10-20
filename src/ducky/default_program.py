@@ -37,7 +37,8 @@ class DefaultProgram(Program):
         self.use()
 
         # Bind matrices
-        model.bind_essential_matrices(self, camera)
+        glUniformMatrix4fv(self.uModel, 1, GL_FALSE, model.model.tolist())
+        glUniformMatrix4fv(self.uProjectionView, 1, GL_FALSE, camera.projection_view.tolist())
         glUniformMatrix4fv(self.uTransposeInverseModel, 1, GL_FALSE, model.model.inverse.transpose().tolist())
 
         # Bind view position
