@@ -1,7 +1,7 @@
 import math
 
 import glfw
-import numpy
+import numpy as np
 from pyrr import Vector3, Matrix44
 
 from ducky.app import app
@@ -12,7 +12,7 @@ class FlyCamera(Camera):
     def __init__(self):
         super(FlyCamera, self).__init__()
         app.center_mouse()
-        self.horizontal_angle = numpy.pi
+        self.horizontal_angle = np.pi
         self.vertical_angle = 0.0
         self.movement_multiplier = 75.0
         self.rotation_multiplier = 0.65
@@ -41,9 +41,9 @@ class FlyCamera(Camera):
             math.cos(self.vertical_angle) * math.cos(self.horizontal_angle)
         ])
         right = Vector3([
-            math.sin(self.horizontal_angle - numpy.pi / 2.0),
+            math.sin(self.horizontal_angle - np.pi / 2.0),
             0,
-            math.cos(self.horizontal_angle - numpy.pi / 2.0)
+            math.cos(self.horizontal_angle - np.pi / 2.0)
         ])
         up = Vector3.cross( right, direction )
 
