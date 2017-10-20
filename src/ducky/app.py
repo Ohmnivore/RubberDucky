@@ -7,8 +7,6 @@ from ducky.sun import Sun
 class App:
 
     def __init__(self):
-        self.window = None # Set by start_app()
-
         self.fullscreen = False
         self.width = 1280
         self.height = 720
@@ -18,11 +16,10 @@ class App:
         self.far = 1000.0
         self.gamma = 2.2
         self.bg_color = Vector3([1.0, 1.0, 1.0])
-        self.force_flat_shading = True
         self.multisample_bits = 8
         self.double_buffer = True
         self.vsync = False
-        self.camera = None # A default camera is created by start_app()
+        self.force_flat_shading = True
 
         # Aspect ratio
         self.aspect_ratio = self.width / self.height
@@ -37,6 +34,9 @@ class App:
         # Global lighting
         self.sun = Sun()
         self.sun.gamma_correct(self.gamma)
+
+        self.window = None # Set by start_app()
+        self.camera = None # A default camera is created by start_app()
 
     def set_mouse_pos(self, x, y):
         glfw.set_cursor_pos(self.window, x, y)

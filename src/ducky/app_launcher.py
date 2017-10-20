@@ -84,7 +84,6 @@ def start_app(state):
     if app.multisample_bits > 0:
         glEnable(GL_MULTISAMPLE)
     glEnable(GL_DEPTH_TEST)
-    glClearStencil(0)
 
     # Timing
     last_frame_time = glfw.get_time()
