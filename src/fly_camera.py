@@ -1,6 +1,6 @@
 from pyrr import Vector3, Matrix44
-from camera import Camera
-from app import app
+from ducky.camera import Camera
+from ducky.app import app
 import glfw
 import math
 import numpy

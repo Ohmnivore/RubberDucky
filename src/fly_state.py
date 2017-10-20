@@ -1,7 +1,7 @@
-from state import State
-from model import Model
-from program import Program
-from app import app
+from ducky.state import State
+from ducky.model import Model
+from ducky.program import Program
+from ducky.app import app
 from fly_camera import FlyCamera
 from OpenGL.GL import *
 from OpenGL.GL import shaders
@@ -10,6 +10,9 @@ class FlyState(State):
 
     def __init__(self):
         super(FlyState, self).__init__()
+
+    def create(self):
+        super(FlyState, self).create()
 
         vertex_shader_src = ''
         with open('shaders/vertex.glsl') as vertex_file:
