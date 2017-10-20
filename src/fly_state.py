@@ -23,18 +23,19 @@ class FlyState(State):
         self.outline_program.load_files('shaders/outline_stencil.vert.glsl', 'shaders/outline_stencil.frag.glsl')
 
         app.camera = FlyCamera()
+        app.camera.position += [0.0, 6, 0.0]
         app.bg_color.xyz = [0.83, 0.80, 0.75]
 
         self.car = Model()
         self.entities.append(self.car)
         self.car.load_obj('assets/car/car.obj')
-        self.car.pos += [14.0, 0.0, -28.0]
+        self.car.pos += [4.0, 0.0, -32.0]
         self.car.scale.fill(6.0)
 
         self.girl = Model()
         self.entities.append(self.girl)
         self.girl.load_obj('assets/low poly girl/low poly girl.obj')
-        self.girl.pos += [0.0, 6.0, -24.0]
+        self.girl.pos += [-10.0, 6.0, -28.0]
 
         # self.teapot = Model()
         # self.entities.append(self.teapot)
