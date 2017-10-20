@@ -1,5 +1,4 @@
 from OpenGL.GL import *
-from OpenGL.GL import shaders
 
 from ducky.model import Model
 from ducky.program import Program
@@ -8,19 +7,9 @@ class OutlineModelStencil(Model):
 
     def __init__(self):
         super(OutlineModelStencil, self).__init__()
-
-        vertex_shader_src = ''
-        with open('shaders/outline_stencil.vert.glsl') as vertex_file:
-            vertex_shader_src = vertex_file.read()
-        vertex_shader = shaders.compileShader(vertex_shader_src, GL_VERTEX_SHADER)
-
-        fragment_shader_src = ''
-        with open('shaders/outline_stencil.frag.glsl') as fragment_file:
-            fragment_shader_src = fragment_file.read()
-        fragment_shader = shaders.compileShader(fragment_shader_src, GL_FRAGMENT_SHADER)
-
-        gl_program = shaders.compileProgram(vertex_shader, fragment_shader)
-        self.outline_program = Program(gl_program)
+        
+        self.outline_program = Program()
+        self.outline_program.load_files('shaders/outline_stencil.vert.glsl', 'shaders/outline_stencil.frag.glsl')
 
     def render(self, opaque, elapsed, camera, program):
         glClear(GL_STENCIL_BUFFER_BIT)

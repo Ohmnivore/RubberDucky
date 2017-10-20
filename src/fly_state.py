@@ -1,6 +1,3 @@
-from OpenGL.GL import *
-from OpenGL.GL import shaders
-
 from ducky.app import app
 from ducky.state import State
 from ducky.model import Model
@@ -16,19 +13,9 @@ class FlyState(State):
 
     def create(self):
         super(FlyState, self).create()
-
-        vertex_shader_src = ''
-        with open('shaders/default.vert.glsl') as vertex_file:
-            vertex_shader_src = vertex_file.read()
-        vertex_shader = shaders.compileShader(vertex_shader_src, GL_VERTEX_SHADER)
-
-        fragment_shader_src = ''
-        with open('shaders/default.frag.glsl') as fragment_file:
-            fragment_shader_src = fragment_file.read()
-        fragment_shader = shaders.compileShader(fragment_shader_src, GL_FRAGMENT_SHADER)
-
-        gl_program = shaders.compileProgram(vertex_shader, fragment_shader)
-        self.program = Program(gl_program)
+        
+        self.program = Program()
+        self.program.load_files('shaders/default.vert.glsl', 'shaders/default.frag.glsl')
 
         app.camera = FlyCamera()
         app.bg_color.xyz = [0.83, 0.80, 0.75]
