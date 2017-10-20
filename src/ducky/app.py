@@ -26,10 +26,10 @@ class App:
 
         # Mouse input
         self.mouse_pos = Vector3([0.0, 0.0, 0.0])
-        self.mouse_btns = np.full(12, False)
+        self.mouse_btns = np.full(glfw.MOUSE_BUTTON_LAST, False)
 
         # Keyboard input
-        self.keys = np.full(360, False)
+        self.keys = np.full(glfw.KEY_LAST, False)
 
         # Global lighting
         self.sun = Sun()
