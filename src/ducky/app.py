@@ -45,6 +45,7 @@ class App:
 
     def render(self, elapsed):
         self.camera.pre_render(elapsed)
+        self.state.pre_render(elapsed)
         self.state.render(elapsed, self.camera)
 
     def set_mouse_pos(self, x, y):

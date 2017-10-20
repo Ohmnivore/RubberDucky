@@ -10,7 +10,6 @@ out vec3 ourNormal;
 
 uniform mat4 uModel;
 uniform mat4 uTransposeInverseModel;
-uniform mat4 uView;
 uniform mat4 uProjectionView;
 
 void main()

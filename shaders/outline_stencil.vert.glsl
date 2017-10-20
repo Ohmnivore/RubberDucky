@@ -9,14 +9,12 @@ out vec3 ourPosition;
 out vec3 ourNormal;
 
 uniform mat4 uModel;
-uniform mat4 uTransposeInverseModel;
-uniform mat4 uView;
 uniform mat4 uProjectionView;
 
 void main()
 {
     ourPosition = vec3(uModel * vec4(aPosition, 1.0));
-    ourNormal = mat3(uTransposeInverseModel) * aNormal;
+    ourNormal = aNormal;
     ourTexture = aTexture;
 
     gl_Position = uProjectionView * vec4(ourPosition, 1.0);

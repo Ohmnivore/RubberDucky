@@ -13,6 +13,7 @@ class Model:
         self.scale = Vector3([1.0, 1.0, 1.0])
         self.rot = Vector3([0.0, 0.0, 0.0])
         self.orientation = Quaternion()
+        self.model = Matrix44.identity()
         self.meshmtl_map = None
 
     def load_obj(self, filepath):
@@ -38,29 +39,17 @@ class Model:
     def update(self, elapsed):
         pass
 
-    def render(self, opaque, elapsed, camera, program):
-        glUseProgram(program.gl_program)
-
+    def pre_render(self, elapsed):
         # Model matrix
-        model = Matrix44.from_scale(self.scale)
+        self.model = Matrix44.from_scale(self.scale)
         translation = Matrix44.from_translation(self.pos)
-        model = translation * self.orientation * model
+        self.model = translation * self.orientation * self.model
 
-        # MVP matrix
-        glUniformMatrix4fv(program.uModel, 1, GL_FALSE, model.tolist())
-        glUniformMatrix4fv(program.uTransposeInverseModel, 1, GL_FALSE, model.inverse.transpose().tolist())
-        glUniformMatrix4fv(program.uView, 1, GL_FALSE, camera.view.tolist())
+    def bind_essential_matrices(self, program, camera):
+        glUniformMatrix4fv(program.uModel, 1, GL_FALSE, self.model.tolist())
         glUniformMatrix4fv(program.uProjectionView, 1, GL_FALSE, camera.projection_view.tolist())
 
-        # View position
-        glUniform3fv(program.uViewPosition, 1, camera.position.tolist())
-
-        # Sun
-        app.sun.bind_uniforms(program)
-
-        # Gamma
-        glUniform1f(program.uGamma, app.gamma)
-
+    def render_meshmtls(self, opaque, program):
         for name, meshmtl in self.meshmtl_map.items():
             if opaque and meshmtl.mtl.alpha == 1.0:
                 meshmtl.render(program)

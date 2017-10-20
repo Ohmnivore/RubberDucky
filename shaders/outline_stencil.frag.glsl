@@ -17,37 +17,17 @@ struct Material
 };
 uniform Material uMaterial;
 
-struct Sun
-{
-    vec3 ambientColor;
-    vec3 diffuseColor;
-    vec3 specularColor;
-    vec3 lightDirection;
-};
-uniform Sun uSun;
-
-uniform vec3 uViewPosition;
-uniform float uGamma;
-
 void main()
 {
     // Ambient
-    vec3 ambient = uSun.ambientColor * uMaterial.ambientColor;
+    vec3 ambient = uMaterial.ambientColor;
 
-    // Diffuse 
-    vec3 norm = normalize(ourNormal);
-    vec3 lightDir = normalize(uSun.lightDirection);
-    float diff = max(dot(norm, -lightDir), 0.0);
-    vec3 diffuse = diff * uSun.diffuseColor * uMaterial.diffuseColor;
+    // Diffuse
+    vec3 diffuse = uMaterial.diffuseColor;
 
     // Specular
-    vec3 viewDir = normalize(uViewPosition - ourPosition);
-    vec3 halfwayDir = normalize(-lightDir + viewDir);  
-    float spec = pow(max(dot(norm, halfwayDir), 0.0), uMaterial.specularExponent);
-    vec3 specular = spec * uSun.specularColor * uMaterial.specularColor;
+    float spec = pow(0.01, uMaterial.specularExponent);
+    vec3 specular = spec * uMaterial.specularColor;
 
     fragColor = vec4(ambient + diffuse + specular + uMaterial.emissiveColor, uMaterial.alpha) * 0.0000001;
-
-    // Apply gamma correction
-    fragColor.rgb = pow(fragColor.rgb, vec3(1.0 / uGamma));
 }
