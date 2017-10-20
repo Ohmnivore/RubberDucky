@@ -19,6 +19,9 @@ class App:
         self.gamma = 2.2
         self.bg_color = Vector3([1.0, 1.0, 1.0])
         self.force_flat_shading = True
+        self.multisample_bits = 8
+        self.double_buffer = True
+        self.vsync = False
         self.camera = None # A default camera is created by start_app()
 
         # Aspect ratio

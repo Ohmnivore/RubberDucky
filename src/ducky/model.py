@@ -39,6 +39,8 @@ class Model:
         pass
 
     def render(self, opaque, elapsed, camera, program):
+        glUseProgram(program.gl_program)
+
         # Model matrix
         model = Matrix44.from_scale(self.scale)
         translation = Matrix44.from_translation(self.pos)

@@ -7,6 +7,7 @@ from ducky.model import Model
 from ducky.program import Program
 
 from fly_camera import FlyCamera
+from outline_model_stencil import OutlineModelStencil
 
 class FlyState(State):
 
@@ -17,12 +18,12 @@ class FlyState(State):
         super(FlyState, self).create()
 
         vertex_shader_src = ''
-        with open('shaders/vertex.glsl') as vertex_file:
+        with open('shaders/default.vert.glsl') as vertex_file:
             vertex_shader_src = vertex_file.read()
         vertex_shader = shaders.compileShader(vertex_shader_src, GL_VERTEX_SHADER)
 
         fragment_shader_src = ''
-        with open('shaders/fragment.glsl') as fragment_file:
+        with open('shaders/default.frag.glsl') as fragment_file:
             fragment_shader_src = fragment_file.read()
         fragment_shader = shaders.compileShader(fragment_shader_src, GL_FRAGMENT_SHADER)
 
@@ -38,7 +39,7 @@ class FlyState(State):
         self.car.pos += [14.0, 0.0, -28.0]
         self.car.scale.fill(6.0)
 
-        self.girl = Model()
+        self.girl = OutlineModelStencil()
         self.entities.append(self.girl)
         self.girl.load_obj('assets/low poly girl/low poly girl.obj')
         self.girl.pos += [0.0, 6.0, -24.0]
@@ -52,9 +53,7 @@ class FlyState(State):
         super(FlyState, self).update(elapsed)
 
     def render(self, elapsed, camera):
-        glUseProgram(self.program.gl_program)
         super(FlyState, self).render(elapsed, camera, self.program)
-        glUseProgram(0)
 
     def destroy(self):
         super(FlyState, self).destroy()
