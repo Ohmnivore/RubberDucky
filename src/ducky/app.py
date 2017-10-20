@@ -37,6 +37,15 @@ class App:
 
         self.window = None # Set by start_app()
         self.camera = None # A default camera is created by start_app()
+        self.state = None  # Set by start_app()
+
+    def update(self, elapsed):
+        self.camera.update(elapsed)
+        self.state.update(elapsed)
+
+    def render(self, elapsed):
+        self.camera.pre_render(elapsed)
+        self.state.render(elapsed, self.camera)
 
     def set_mouse_pos(self, x, y):
         glfw.set_cursor_pos(self.window, x, y)

@@ -8,7 +8,11 @@ class Camera:
         self.position = Vector3([0.0, 0.0, 0.0])
         self.view = Matrix44.identity()
         self.projection = Matrix44.identity()
+        self.projection_view = Matrix44.identity()
 
     def update(self, elapsed):
         # Projection matrix
         self.projection = Matrix44.perspective_projection(app.fov, app.aspect_ratio, app.near, app.far)
+
+    def pre_render(self, elapsed):
+        self.projection_view = self.projection * self.view

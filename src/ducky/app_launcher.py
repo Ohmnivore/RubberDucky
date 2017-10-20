@@ -78,7 +78,8 @@ def start_app(state):
     # Create state and camera
     app.window = window
     app.camera = Camera()
-    state.create()
+    app.state = state
+    app.state.create()
 
     # Setup OpenGL global config
     if app.multisample_bits > 0:
@@ -125,10 +126,9 @@ def start_app(state):
             glClearColor(app.bg_color[0], app.bg_color[1], app.bg_color[2], 1.0)
             glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT)
 
-            # Manage state and camera
-            app.camera.update(time_since_last_render)
-            state.update(time_since_last_render)
-            state.render(time_since_last_render, app.camera)
+            # Manage state
+            app.update(time_since_last_render)
+            app.render(time_since_last_render)
             time_since_last_render = 0.0
 
             # Poll for and process events
