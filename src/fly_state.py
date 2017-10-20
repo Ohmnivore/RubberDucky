@@ -5,6 +5,7 @@ from ducky.app import app
 from ducky.state import State
 from ducky.model import Model
 from ducky.program import Program
+
 from fly_camera import FlyCamera
 
 class FlyState(State):
