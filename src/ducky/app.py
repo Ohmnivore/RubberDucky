@@ -1,6 +1,7 @@
-from ducky.sun import Sun
-from pyrr import Vector3
 import glfw
+from pyrr import Vector3
+
+from ducky.sun import Sun
 
 class App:
 

@@ -1,10 +1,11 @@
+from OpenGL.GL import *
+from OpenGL.GL import shaders
+
+from ducky.app import app
 from ducky.state import State
 from ducky.model import Model
 from ducky.program import Program
-from ducky.app import app
 from fly_camera import FlyCamera
-from OpenGL.GL import *
-from OpenGL.GL import shaders
 
 class FlyState(State):
 

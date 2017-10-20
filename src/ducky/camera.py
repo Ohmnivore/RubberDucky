@@ -1,4 +1,5 @@
 from pyrr import Vector3, Matrix44
+
 from ducky.app import app
 
 class Camera:

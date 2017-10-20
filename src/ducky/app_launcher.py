@@ -1,5 +1,6 @@
 import glfw
 from OpenGL.GL import *
+
 from ducky.app import app
 from ducky.camera import Camera
 from ducky.icons import set_icons

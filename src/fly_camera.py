@@ -1,9 +1,11 @@
-from pyrr import Vector3, Matrix44
-from ducky.camera import Camera
-from ducky.app import app
-import glfw
 import math
+
+import glfw
 import numpy
+from pyrr import Vector3, Matrix44
+
+from ducky.app import app
+from ducky.camera import Camera
 
 class FlyCamera(Camera):
 
