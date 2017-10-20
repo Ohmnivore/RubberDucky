@@ -1,4 +1,5 @@
 import glfw
+import numpy as np
 from pyrr import Vector3
 
 from ducky.sun import Sun
@@ -25,14 +26,10 @@ class App:
 
         # Mouse input
         self.mouse_pos = Vector3([0.0, 0.0, 0.0])
-        self.mouse_btns = []
-        for btn in range(0, 12):
-            self.mouse_btns.append(False)
+        self.mouse_btns = np.full(12, False)
 
         # Keyboard input
-        self.keys = []
-        for key in range(0, 360):
-            self.keys.append(False)
+        self.keys = np.full(360, False)
 
         # Global lighting
         self.sun = Sun()

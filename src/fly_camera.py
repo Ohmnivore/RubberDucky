@@ -28,10 +28,9 @@ class FlyCamera(Camera):
             d = 1.0 - math.exp(math.log(0.5) * self.rotation_springiness * elapsed)
             self.mouse_x += (app.mouse_pos[0] - self.mouse_x) * d
             self.mouse_y += (app.mouse_pos[1] - self.mouse_y) * d
-            delta = [app.width / 2.0 - self.mouse_x, app.height / 2.0 - self.mouse_y]
 
-            self.horizontal_angle += self.rotation_multiplier * elapsed * delta[0]
-            self.vertical_angle   += self.rotation_multiplier * elapsed * delta[1]
+            self.horizontal_angle += self.rotation_multiplier * elapsed * (app.width / 2.0 - self.mouse_x)
+            self.vertical_angle   += self.rotation_multiplier * elapsed * (app.height / 2.0 - self.mouse_y)
         app.center_mouse()
 
         # View matrix
