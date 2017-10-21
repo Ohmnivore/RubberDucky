@@ -7,7 +7,7 @@ from ducky.default_program import DefaultProgram
 
 from fly_camera import FlyCamera
 from outline_wireframe_program import OutlineWireframeProgram
-from outline_wireframe_constant_program import OutlineWireframeConstantProgram
+from outline_wireframe_constant_pixel_program import OutlineWireframeConstantPixelProgram
 from outline_scale_program import OutlineScaleProgram
 from outline_scale_constant_program import OutlineScaleConstantProgram
 from outline_scale_constant_pixel_program import OutlineScaleConstantPixelProgram
@@ -27,8 +27,8 @@ class FlyState(State):
         # self.outline_program = OutlineWireframeProgram(self.default_program, 2)
         # self.outline_program.load_files('shaders/outline_wireframe.vert.glsl', 'shaders/outline_wireframe.frag.glsl')
 
-        # self.outline_program = OutlineWireframeConstantProgram(self.default_program, 1.0)
-        # self.outline_program.load_files('shaders/outline_wireframe_constant.vert.glsl', 'shaders/outline_wireframe_constant.frag.glsl')
+        self.outline_program = OutlineWireframeConstantPixelProgram(self.default_program, 1.0)
+        self.outline_program.load_files('shaders/outline_wireframe_constant_pixel.vert.glsl', 'shaders/outline_wireframe_constant_pixel.frag.glsl')
 
         # self.outline_program = OutlineScaleProgram(self.default_program, 0.1)
         # self.outline_program.load_files('shaders/outline_scale.vert.glsl', 'shaders/outline_scale.frag.glsl')
@@ -36,8 +36,8 @@ class FlyState(State):
         # self.outline_program = OutlineScaleConstantProgram(self.default_program, 1.0, True)
         # self.outline_program.load_files('shaders/outline_scale_constant.vert.glsl', 'shaders/outline_scale_constant.frag.glsl')
 
-        self.outline_program = OutlineScaleConstantPixelProgram(self.default_program, 1.0)
-        self.outline_program.load_files('shaders/outline_scale_constant_pixel.vert.glsl', 'shaders/outline_scale_constant_pixel.frag.glsl')
+        # self.outline_program = OutlineScaleConstantPixelProgram(self.default_program, 1.0)
+        # self.outline_program.load_files('shaders/outline_scale_constant_pixel.vert.glsl', 'shaders/outline_scale_constant_pixel.frag.glsl')
 
         # self.outline_program = OutlineDerivativesProgram()
         # self.outline_program.load_files('shaders/outline_derivatives.vert.glsl', 'shaders/outline_derivatives.frag.glsl')
