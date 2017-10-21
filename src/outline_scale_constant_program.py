@@ -5,10 +5,11 @@ from ducky.program import Program
 
 class OutlineScaleConstantProgram(Program):
 
-    def __init__(self, main_program, line_width):
+    def __init__(self, main_program, line_width, use_pixels):
         super(OutlineScaleConstantProgram, self).__init__()
         self.main_program = main_program
         self.line_width = line_width
+        self.use_pixels = use_pixels
 
     def load_uniform_locations(self, gl_program):
         super(OutlineScaleConstantProgram, self).load_uniform_locations(gl_program)
@@ -35,8 +36,11 @@ class OutlineScaleConstantProgram(Program):
         glStencilFunc(GL_EQUAL, 0, 0x01)
         glStencilMask(0x00)
 
-        # Calculate pixel size in clip space
-        px_size = (1.0 / app.width) * 2.0
+        line_width = self.line_width
+        if self.use_pixels:
+            # Calculate pixel size in clip space
+            px_size = (1.0 / app.width) * 2.0
+            line_width = px_size * self.line_width
 
         self.use()
         glUniformMatrix4fv(self.uModel, 1, GL_FALSE, model.model.astype('float32').tobytes())
@@ -44,7 +48,7 @@ class OutlineScaleConstantProgram(Program):
         glUniformMatrix4fv(self.uProjection, 1, GL_FALSE, camera.projection.astype('float32').tobytes())
         model_view = camera.view * model.model
         glUniformMatrix4fv(self.uTransposeInverseModel, 1, GL_FALSE, model_view.inverse.transpose().astype('float32').tobytes())
-        glUniform1f(self.uOutlineWidth, px_size * self.line_width)
+        glUniform1f(self.uOutlineWidth, line_width)
         self.main_program.render_meshmtls(self.render_meshmtl, model, opaque)
 
         glDepthMask(GL_TRUE)
