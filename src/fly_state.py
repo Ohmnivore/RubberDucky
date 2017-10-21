@@ -6,7 +6,9 @@ from ducky.model import Model
 from ducky.default_program import DefaultProgram
 
 from fly_camera import FlyCamera
-from outline_stencil_program import OutlineStencilProgram
+from outline_wireframe_program import OutlineWireframeProgram
+from outline_scale_program import OutlineScaleProgram
+from outline_derivatives_program import OutlineDerivativesProgram
 
 class FlyState(State):
 
@@ -19,8 +21,14 @@ class FlyState(State):
         self.default_program = DefaultProgram()
         self.default_program.load_files('shaders/default.vert.glsl', 'shaders/default.frag.glsl')
 
-        self.outline_program = OutlineStencilProgram(self.default_program)
-        self.outline_program.load_files('shaders/outline_stencil.vert.glsl', 'shaders/outline_stencil.frag.glsl')
+        self.outline_program = OutlineWireframeProgram(self.default_program, 2)
+        self.outline_program.load_files('shaders/outline_wireframe.vert.glsl', 'shaders/outline_wireframe.frag.glsl')
+
+        # self.outline_program = OutlineScaleProgram(self.default_program, 2)
+        # self.outline_program.load_files('shaders/outline_scale.vert.glsl', 'shaders/outline_scale.frag.glsl')
+
+        # self.outline_program = OutlineDerivativesProgram()
+        # self.outline_program.load_files('shaders/outline_derivatives.vert.glsl', 'shaders/outline_derivatives.frag.glsl')
 
         self.program = self.outline_program
 

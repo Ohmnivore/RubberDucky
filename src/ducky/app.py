@@ -19,7 +19,7 @@ class App:
         self.multisample_bits = 8
         self.double_buffer = True
         self.vsync = False
-        self.force_flat_shading = True
+        self.force_flat_shading = False
 
         # Aspect ratio
         self.aspect_ratio = self.width / self.height

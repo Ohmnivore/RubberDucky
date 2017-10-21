@@ -39,7 +39,9 @@ class Model:
         pass
 
     def pre_render(self, elapsed):
-        # Model matrix
+        self.compute_model_matrix(elapsed)
+
+    def compute_model_matrix(self, elapsed):
         self.model = Matrix44.from_scale(self.scale)
         translation = Matrix44.from_translation(self.pos)
         self.model = translation * self.orientation * self.model
