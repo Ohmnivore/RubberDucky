@@ -8,6 +8,7 @@ from ducky.default_program import DefaultProgram
 from fly_camera import FlyCamera
 from outline_wireframe_program import OutlineWireframeProgram
 from outline_scale_program import OutlineScaleProgram
+from outline_scale_constant_program import OutlineScaleConstantProgram
 from outline_derivatives_program import OutlineDerivativesProgram
 
 class FlyState(State):
@@ -24,8 +25,11 @@ class FlyState(State):
         # self.outline_program = OutlineWireframeProgram(self.default_program, 2)
         # self.outline_program.load_files('shaders/outline_wireframe.vert.glsl', 'shaders/outline_wireframe.frag.glsl')
 
-        self.outline_program = OutlineScaleProgram(self.default_program, 0.1)
-        self.outline_program.load_files('shaders/outline_scale.vert.glsl', 'shaders/outline_scale.frag.glsl')
+        # self.outline_program = OutlineScaleProgram(self.default_program, 0.1)
+        # self.outline_program.load_files('shaders/outline_scale.vert.glsl', 'shaders/outline_scale.frag.glsl')
+
+        self.outline_program = OutlineScaleConstantProgram(self.default_program, 2.0)
+        self.outline_program.load_files('shaders/outline_scale_constant.vert.glsl', 'shaders/outline_scale_constant.frag.glsl')
 
         # self.outline_program = OutlineDerivativesProgram()
         # self.outline_program.load_files('shaders/outline_derivatives.vert.glsl', 'shaders/outline_derivatives.frag.glsl')
@@ -37,11 +41,11 @@ class FlyState(State):
         app.camera.orbit_anchor.xyz = [4.0, 0.0, -32.0]
         app.bg_color.xyz = [0.83, 0.80, 0.75]
 
-        self.car = Model()
-        self.entities.append(self.car)
-        self.car.load_obj('assets/car/car.obj')
-        self.car.pos.xyz = [4.0, 0.0, -32.0]
-        self.car.scale.fill(6.0)
+        # self.car = Model()
+        # self.entities.append(self.car)
+        # self.car.load_obj('assets/car/car.obj')
+        # self.car.pos.xyz = [4.0, 0.0, -32.0]
+        # self.car.scale.fill(6.0)
 
         self.girl = Model()
         self.entities.append(self.girl)

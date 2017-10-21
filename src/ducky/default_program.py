@@ -39,7 +39,8 @@ class DefaultProgram(Program):
         # Bind matrices
         glUniformMatrix4fv(self.uModel, 1, GL_FALSE, model.model.astype('float32').tobytes())
         glUniformMatrix4fv(self.uProjectionView, 1, GL_FALSE, camera.projection_view.astype('float32').tobytes())
-        glUniformMatrix4fv(self.uTransposeInverseModel, 1, GL_FALSE, model.model.inverse.transpose().astype('float32').tobytes())
+        model_view = camera.view * model.model
+        glUniformMatrix4fv(self.uTransposeInverseModel, 1, GL_FALSE, model_view.inverse.transpose().astype('float32').tobytes())
 
         # Bind view position
         glUniform3fv(self.uViewPosition, 1, camera.position.astype('float32').tobytes())
