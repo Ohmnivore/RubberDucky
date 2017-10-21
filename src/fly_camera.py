@@ -20,10 +20,30 @@ class FlyCamera(Camera):
         self.mouse_x = app.mouse_pos[0]
         self.mouse_y = app.mouse_pos[1]
 
+        self.orbiting = False
+        self.orbit_distance = 0.0
+        self.orbit_anchor = Vector3([0.0, 0.0, 0.0])
+        self.orbit_speed = np.pi / 2.0
+
     def update(self, elapsed):
         super(FlyCamera, self).update(elapsed)
 
-        if app.mouse_btns[glfw.MOUSE_BUTTON_LEFT]:
+        if app.keys_pressed[glfw.KEY_SPACE]:
+            self.orbiting = not self.orbiting
+            if self.orbiting:
+                diff = (self.position - self.orbit_anchor)
+                diff.y = 0.0
+                self.orbit_distance = diff.length
+                self.horizontal_angle = math.atan2(diff.x, diff.z) - np.pi
+
+        if self.orbiting:
+            self.horizontal_angle += elapsed * self.orbit_speed
+            cos = math.cos(self.horizontal_angle) * self.orbit_distance
+            sin = math.sin(self.horizontal_angle) * self.orbit_distance
+            self.position.x = self.orbit_anchor.x - sin
+            self.position.z = self.orbit_anchor.z - cos
+
+        if app.mouse_btns[glfw.MOUSE_BUTTON_LEFT] and not self.orbiting:
             # Exponential decay for smoothing
             d = 1.0 - math.exp(math.log(0.5) * self.rotation_springiness * elapsed)
             self.mouse_x += (app.mouse_pos[0] - self.mouse_x) * d

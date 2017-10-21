@@ -26,6 +26,7 @@ class FlyState(State):
 
         app.camera = FlyCamera()
         app.camera.position += [0.0, 6, 0.0]
+        app.camera.orbit_anchor += [4.0, 0.0, -32.0]
         app.bg_color.xyz = [0.83, 0.80, 0.75]
 
         self.car = Model()
