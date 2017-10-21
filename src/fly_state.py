@@ -27,14 +27,14 @@ class FlyState(State):
         # self.outline_program = OutlineWireframeProgram(self.default_program, 1.0)
         # self.outline_program.load_files('shaders/outline_wireframe.vert.glsl', 'shaders/outline_wireframe.frag.glsl')
 
-        self.outline_program = OutlineWireframeConstantPixelProgram(self.default_program, 1.0)
-        self.outline_program.load_files('shaders/outline_wireframe_constant_pixel.vert.glsl', 'shaders/outline_wireframe_constant_pixel.frag.glsl')
+        # self.outline_program = OutlineWireframeConstantPixelProgram(self.default_program, 1.0)
+        # self.outline_program.load_files('shaders/outline_wireframe_constant_pixel.vert.glsl', 'shaders/outline_wireframe_constant_pixel.frag.glsl')
 
         # self.outline_program = OutlineScaleProgram(self.default_program, 0.1)
         # self.outline_program.load_files('shaders/outline_scale.vert.glsl', 'shaders/outline_scale.frag.glsl')
 
-        # self.outline_program = OutlineScaleConstantProgram(self.default_program, 1.0, True)
-        # self.outline_program.load_files('shaders/outline_scale_constant.vert.glsl', 'shaders/outline_scale_constant.frag.glsl')
+        self.outline_program = OutlineScaleConstantProgram(self.default_program, 1.0, True)
+        self.outline_program.load_files('shaders/outline_scale_constant.vert.glsl', 'shaders/outline_scale_constant.frag.glsl')
 
         # self.outline_program = OutlineScaleConstantPixelProgram(self.default_program, 1.0)
         # self.outline_program.load_files('shaders/outline_scale_constant_pixel.vert.glsl', 'shaders/outline_scale_constant_pixel.frag.glsl')

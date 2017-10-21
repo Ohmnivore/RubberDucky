@@ -20,6 +20,7 @@ void main()
     clipSpaceNormalv3.x *= uOutlineWidth;
     clipSpaceNormalv3.y *= uOutlineHeight;
 
-    clipSpacePosition.xyz += clipSpaceNormalv3;
+    clipSpacePosition.xy += clipSpaceNormalv3.xy;
+    clipSpacePosition.z += 0.00000001; // Nudge forward a tiny bit to barely pass the depth test
     gl_Position = clipSpacePosition;
 }

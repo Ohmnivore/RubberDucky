@@ -27,6 +27,7 @@ void main()
     clipSpaceNormalv3.x = clipSpaceNormalv3.x - mod(clipSpaceNormalv3.x, pxWidth) + max(sign(clipSpaceNormalv3.x), 0.0) * pxWidth;
     clipSpaceNormalv3.y = clipSpaceNormalv3.y - mod(clipSpaceNormalv3.y, pxHeight) + max(sign(clipSpaceNormalv3.y), 0.0) * pxHeight;
 
-    clipSpacePosition.xyz += clipSpaceNormalv3;
+    clipSpacePosition.xy += clipSpaceNormalv3.xy;
+    clipSpacePosition.z += 0.00000001; // Nudge forward a tiny bit to barely pass the depth test
     gl_Position = clipSpacePosition;
 }
