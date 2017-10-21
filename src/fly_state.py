@@ -25,25 +25,25 @@ class FlyState(State):
         self.program = self.outline_program
 
         app.camera = FlyCamera()
-        app.camera.position += [0.0, 6, 0.0]
-        app.camera.orbit_anchor += [4.0, 0.0, -32.0]
+        app.camera.position.xyz = [0.0, 6, 0.0]
+        app.camera.orbit_anchor.xyz = [4.0, 0.0, -32.0]
         app.bg_color.xyz = [0.83, 0.80, 0.75]
 
         self.car = Model()
         self.entities.append(self.car)
         self.car.load_obj('assets/car/car.obj')
-        self.car.pos += [4.0, 0.0, -32.0]
+        self.car.pos.xyz = [4.0, 0.0, -32.0]
         self.car.scale.fill(6.0)
 
         self.girl = Model()
         self.entities.append(self.girl)
         self.girl.load_obj('assets/low poly girl/low poly girl.obj')
-        self.girl.pos += [-10.0, 6.0, -28.0]
+        self.girl.pos.xyz = [-10.0, 6.0, -28.0]
 
         # self.teapot = Model()
         # self.entities.append(self.teapot)
         # self.teapot.load_obj('assets/teapot/teapot.obj')
-        # self.teapot.pos += [-8.0, 0.0, -24.0]
+        # self.teapot.pos.xyz = [-8.0, 0.0, -24.0]
 
     def update(self, elapsed):
         super(FlyState, self).update(elapsed)
