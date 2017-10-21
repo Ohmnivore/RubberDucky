@@ -10,6 +10,7 @@ from outline_wireframe_program import OutlineWireframeProgram
 from outline_wireframe_constant_program import OutlineWireframeConstantProgram
 from outline_scale_program import OutlineScaleProgram
 from outline_scale_constant_program import OutlineScaleConstantProgram
+from outline_scale_constant_pixel_program import OutlineScaleConstantPixelProgram
 from outline_derivatives_program import OutlineDerivativesProgram
 
 class FlyState(State):
@@ -26,14 +27,17 @@ class FlyState(State):
         # self.outline_program = OutlineWireframeProgram(self.default_program, 2)
         # self.outline_program.load_files('shaders/outline_wireframe.vert.glsl', 'shaders/outline_wireframe.frag.glsl')
 
-        self.outline_program = OutlineWireframeConstantProgram(self.default_program, 1.0)
-        self.outline_program.load_files('shaders/outline_wireframe_constant.vert.glsl', 'shaders/outline_wireframe_constant.frag.glsl')
+        # self.outline_program = OutlineWireframeConstantProgram(self.default_program, 1.0)
+        # self.outline_program.load_files('shaders/outline_wireframe_constant.vert.glsl', 'shaders/outline_wireframe_constant.frag.glsl')
 
         # self.outline_program = OutlineScaleProgram(self.default_program, 0.1)
         # self.outline_program.load_files('shaders/outline_scale.vert.glsl', 'shaders/outline_scale.frag.glsl')
 
-        # self.outline_program = OutlineScaleConstantProgram(self.default_program, 4.0, True)
+        # self.outline_program = OutlineScaleConstantProgram(self.default_program, 1.0, True)
         # self.outline_program.load_files('shaders/outline_scale_constant.vert.glsl', 'shaders/outline_scale_constant.frag.glsl')
+
+        self.outline_program = OutlineScaleConstantPixelProgram(self.default_program, 1.0)
+        self.outline_program.load_files('shaders/outline_scale_constant_pixel.vert.glsl', 'shaders/outline_scale_constant_pixel.frag.glsl')
 
         # self.outline_program = OutlineDerivativesProgram()
         # self.outline_program.load_files('shaders/outline_derivatives.vert.glsl', 'shaders/outline_derivatives.frag.glsl')
@@ -42,7 +46,6 @@ class FlyState(State):
 
         app.camera = FlyCamera()
         app.camera.position.xyz = [0.0, 6, 0.0]
-        app.camera.orbit_anchor.xyz = [4.0, 0.0, -32.0]
         app.bg_color.xyz = [0.83, 0.80, 0.75]
 
         self.car = Model()
@@ -60,6 +63,8 @@ class FlyState(State):
         # self.entities.append(self.teapot)
         # self.teapot.load_obj('assets/teapot/teapot.obj')
         # self.teapot.pos.xyz = [-8.0, 0.0, -24.0]
+
+        app.camera.orbit_anchor.xyz = self.girl.pos
 
     def update(self, elapsed):
         super(FlyState, self).update(elapsed)
