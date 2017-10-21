@@ -10,10 +10,11 @@ out vec3 ourNormal;
 
 uniform mat4 uModel;
 uniform mat4 uProjectionView;
+uniform float uOutlineWidth;
 
 void main()
 {
-    ourPosition = vec3(uModel * vec4(aPosition, 1.0));
+    ourPosition = vec3(uModel * vec4(aPosition + aNormal * uOutlineWidth, 1.0));
     ourNormal = aNormal;
     ourTexture = aTexture;
 

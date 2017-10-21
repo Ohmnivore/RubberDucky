@@ -16,6 +16,8 @@ class OutlineScaleProgram(Program):
         self.uModel =                       glGetUniformLocation(gl_program, 'uModel')
         self.uProjectionView =              glGetUniformLocation(gl_program, 'uProjectionView')
 
+        self.uOutlineWidth =                glGetUniformLocation(gl_program, 'uOutlineWidth')
+
     def render_model(self, model, opaque, elapsed, camera):
         glClear(GL_STENCIL_BUFFER_BIT)
 
@@ -30,14 +32,11 @@ class OutlineScaleProgram(Program):
         glStencilMask(0x00)
 
         self.use()
-        scale_backup = model.scale.xyz
-        model.scale.xyz = [scale_backup.x * 1.1, scale_backup.y * 1.1, scale_backup.z * 1.1]
-        model.compute_model_matrix(elapsed)
         glUniformMatrix4fv(self.uModel, 1, GL_FALSE, model.model.astype('float32').tobytes())
         glUniformMatrix4fv(self.uProjectionView, 1, GL_FALSE, camera.projection_view.astype('float32').tobytes())
+        glUniform1f(self.uOutlineWidth, self.line_width)
         self.main_program.render_meshmtls(self.render_meshmtl, model, opaque)
 
-        model.scale.xyz = scale_backup
         model.compute_model_matrix(elapsed)
         glDisable(GL_STENCIL_TEST)
         glStencilMask(0xFF)

@@ -43,8 +43,9 @@ class Model:
 
     def compute_model_matrix(self, elapsed):
         self.model = Matrix44.from_scale(self.scale)
+        self.model = self.model * self.orientation
         translation = Matrix44.from_translation(self.pos)
-        self.model = translation * self.orientation * self.model
+        self.model = translation * self.model
     
     def destroy(self):
         for name, meshmtl in self.meshmtl_map.items():

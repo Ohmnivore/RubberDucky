@@ -24,7 +24,7 @@ class FlyState(State):
         # self.outline_program = OutlineWireframeProgram(self.default_program, 2)
         # self.outline_program.load_files('shaders/outline_wireframe.vert.glsl', 'shaders/outline_wireframe.frag.glsl')
 
-        self.outline_program = OutlineScaleProgram(self.default_program, 2)
+        self.outline_program = OutlineScaleProgram(self.default_program, 0.1)
         self.outline_program.load_files('shaders/outline_scale.vert.glsl', 'shaders/outline_scale.frag.glsl')
 
         # self.outline_program = OutlineDerivativesProgram()
