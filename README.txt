@@ -1,7 +1,8 @@
 # TODO
 * Render to/from textures
 * Diffuse maps, specular, emission, normal maps
-* Hatching
+* Dittering/color palette
+* Pixel art upscaling
 
 # Edge detection
 * Stencil + scale -> done

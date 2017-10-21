@@ -26,6 +26,7 @@ class OutlineWireframeProgram(Program):
 
         self.main_program.render_model(model, opaque, elapsed, camera)
 
+        glDepthMask(GL_FALSE)
         glStencilFunc(GL_EQUAL, 0, 0x01)
         glStencilMask(0x00)
         glLineWidth(self.line_width)
@@ -36,6 +37,7 @@ class OutlineWireframeProgram(Program):
         glUniformMatrix4fv(self.uProjectionView, 1, GL_FALSE, camera.projection_view.astype('float32').tobytes())
         self.main_program.render_meshmtls(self.render_meshmtl, model, opaque)
 
+        glDepthMask(GL_TRUE)
         glDisable(GL_STENCIL_TEST)
         glStencilMask(0xFF)
         glPolygonMode( GL_FRONT_AND_BACK, GL_FILL )

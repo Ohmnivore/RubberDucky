@@ -31,6 +31,7 @@ class OutlineWireframeConstantProgram(Program):
 
         self.main_program.render_model(model, opaque, elapsed, camera)
 
+        glDepthMask(GL_FALSE)
         glStencilFunc(GL_EQUAL, 0, 0x01)
         glStencilMask(0x00)
         glLineWidth(self.line_width)
@@ -48,6 +49,7 @@ class OutlineWireframeConstantProgram(Program):
         glUniform1f(self.uOutlineWidth, px_size * self.line_width / 2.0) # Offset by half the line width, as it's normally drawn along the middle of the edges
         self.main_program.render_meshmtls(self.render_meshmtl, model, opaque)
 
+        glDepthMask(GL_TRUE)
         glDisable(GL_STENCIL_TEST)
         glStencilMask(0xFF)
         glPolygonMode( GL_FRONT_AND_BACK, GL_FILL )

@@ -31,6 +31,7 @@ class OutlineScaleConstantProgram(Program):
 
         self.main_program.render_model(model, opaque, elapsed, camera)
 
+        glDepthMask(GL_FALSE)
         glStencilFunc(GL_EQUAL, 0, 0x01)
         glStencilMask(0x00)
 
@@ -46,7 +47,7 @@ class OutlineScaleConstantProgram(Program):
         glUniform1f(self.uOutlineWidth, px_size * self.line_width)
         self.main_program.render_meshmtls(self.render_meshmtl, model, opaque)
 
-        model.compute_model_matrix(elapsed)
+        glDepthMask(GL_TRUE)
         glDisable(GL_STENCIL_TEST)
         glStencilMask(0xFF)
 
