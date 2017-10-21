@@ -16,11 +16,11 @@ class Material:
         self.alpha = 0.0
     
     def bind_uniforms(self, program):
-        glUniform3fv(program.uMaterial_ambientColor, 1,     self.ambient_color.tolist())
-        glUniform3fv(program.uMaterial_diffuseColor, 1,     self.diffuse_color.tolist())
-        glUniform3fv(program.uMaterial_specularColor, 1,    self.specular_color.tolist())
+        glUniform3fv(program.uMaterial_ambientColor, 1,     self.ambient_color.astype('float32').tobytes())
+        glUniform3fv(program.uMaterial_diffuseColor, 1,     self.diffuse_color.astype('float32').tobytes())
+        glUniform3fv(program.uMaterial_specularColor, 1,    self.specular_color.astype('float32').tobytes())
         glUniform1f(program.uMaterial_specularExponent,     self.specular_exponent)
-        glUniform3fv(program.uMaterial_emissiveColor, 1,    self.emissive_color.tolist())
+        glUniform3fv(program.uMaterial_emissiveColor, 1,    self.emissive_color.astype('float32').tobytes())
         glUniform1f(program.uMaterial_alpha,                self.alpha)
 
     def gamma_correct(self, gamma):

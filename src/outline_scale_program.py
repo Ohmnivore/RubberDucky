@@ -33,8 +33,8 @@ class OutlineScaleProgram(Program):
         scale_backup = model.scale.xyz
         model.scale.xyz = [scale_backup.x * 1.1, scale_backup.y * 1.1, scale_backup.z * 1.1]
         model.compute_model_matrix(elapsed)
-        glUniformMatrix4fv(self.uModel, 1, GL_FALSE, model.model.tolist())
-        glUniformMatrix4fv(self.uProjectionView, 1, GL_FALSE, camera.projection_view.tolist())
+        glUniformMatrix4fv(self.uModel, 1, GL_FALSE, model.model.astype('float32').tobytes())
+        glUniformMatrix4fv(self.uProjectionView, 1, GL_FALSE, camera.projection_view.astype('float32').tobytes())
         self.main_program.render_meshmtls(self.render_meshmtl, model, opaque)
 
         model.scale.xyz = scale_backup

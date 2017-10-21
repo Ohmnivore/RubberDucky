@@ -37,12 +37,12 @@ class OutlineDerivativesProgram(Program):
         self.use()
 
         # Bind matrices
-        glUniformMatrix4fv(self.uModel, 1, GL_FALSE, model.model.tolist())
-        glUniformMatrix4fv(self.uProjectionView, 1, GL_FALSE, camera.projection_view.tolist())
-        glUniformMatrix4fv(self.uTransposeInverseModel, 1, GL_FALSE, model.model.inverse.transpose().tolist())
+        glUniformMatrix4fv(self.uModel, 1, GL_FALSE, model.model.astype('float32').tobytes())
+        glUniformMatrix4fv(self.uProjectionView, 1, GL_FALSE, camera.projection_view.astype('float32').tobytes())
+        glUniformMatrix4fv(self.uTransposeInverseModel, 1, GL_FALSE, model.model.inverse.transpose().astype('float32').tobytes())
 
         # Bind view position
-        glUniform3fv(self.uViewPosition, 1, camera.position.tolist())
+        glUniform3fv(self.uViewPosition, 1, camera.position.astype('float32').tobytes())
 
         # Bind sun
         app.sun.bind_uniforms(self)
