@@ -24,7 +24,7 @@ class FlyState(State):
         self.default_program = DefaultProgram()
         self.default_program.load_files('shaders/default.vert.glsl', 'shaders/default.frag.glsl')
 
-        # self.outline_program = OutlineWireframeProgram(self.default_program, 2)
+        # self.outline_program = OutlineWireframeProgram(self.default_program, 1.0)
         # self.outline_program.load_files('shaders/outline_wireframe.vert.glsl', 'shaders/outline_wireframe.frag.glsl')
 
         self.outline_program = OutlineWireframeConstantPixelProgram(self.default_program, 1.0)
