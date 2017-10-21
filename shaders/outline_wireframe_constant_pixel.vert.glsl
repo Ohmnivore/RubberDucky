@@ -10,8 +10,6 @@ uniform mat4 uView;
 uniform mat4 uProjection;
 uniform float uOutlineWidth;
 uniform float uOutlineHeight;
-uniform float uPxWidth;
-uniform float uPxHeight;
 
 void main()
 {
