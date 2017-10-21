@@ -12,10 +12,10 @@ uniform float uOutlineWidth;
 
 void main()
 {
-    vec4 worldSpacePosition = uProjection * uView * uModel * vec4(aPosition, 1.0);
-    vec4 worldSpaceNormal = uProjection * vec4(normalize(mat3(uTransposeInverseModel) * aNormal), 1.0);
-    worldSpaceNormal.z = 0.0;
-    worldSpacePosition.xyz += normalize(worldSpaceNormal.xyz) * worldSpacePosition.w * uOutlineWidth;
+    vec4 clipSpacePosition = uProjection * uView * uModel * vec4(aPosition, 1.0);
+    vec4 clipSpaceNormal = uProjection * vec4(normalize(mat3(uTransposeInverseModel) * aNormal), 1.0);
+    clipSpaceNormal.z = 0.0;
+    clipSpacePosition.xyz += normalize(clipSpaceNormal.xyz) * clipSpacePosition.w * uOutlineWidth;
 
-    gl_Position = worldSpacePosition;
+    gl_Position = clipSpacePosition;
 }
