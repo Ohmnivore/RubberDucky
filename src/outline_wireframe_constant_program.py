@@ -45,7 +45,7 @@ class OutlineWireframeConstantProgram(Program):
         glUniformMatrix4fv(self.uProjection, 1, GL_FALSE, camera.projection.astype('float32').tobytes())
         model_view = camera.view * model.model
         glUniformMatrix4fv(self.uTransposeInverseModel, 1, GL_FALSE, model_view.inverse.transpose().astype('float32').tobytes())
-        glUniform1f(self.uOutlineWidth, px_size * self.line_width / 2.0)
+        glUniform1f(self.uOutlineWidth, px_size * self.line_width / 2.0) # Offset by half the line width
         self.main_program.render_meshmtls(self.render_meshmtl, model, opaque)
 
         glDisable(GL_STENCIL_TEST)
