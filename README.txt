@@ -4,8 +4,8 @@
 * Hatching
 
 # Edge detection
-* Stencil + scale
-* Stencil + wireframe
+* Stencil + scale -> done
+* Stencil + wireframe -> done
 * Stencil + geometry shader + wireframe
 * Winding order
 * dFdx and dFdy
