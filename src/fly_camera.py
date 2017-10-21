@@ -14,7 +14,8 @@ class FlyCamera(Camera):
         app.center_mouse()
         self.horizontal_angle = np.pi
         self.vertical_angle = 0.0
-        self.movement_multiplier = 75.0
+        self.movement_multiplier = 32.0
+        self.movement_fast_multiplier = 256.0
         self.rotation_multiplier = 0.65
         self.rotation_springiness = 75.0
         self.mouse_x = app.mouse_pos[0]
@@ -67,18 +68,22 @@ class FlyCamera(Camera):
         up = Vector3.cross( right, direction )
 
         if app.mouse_btns[glfw.MOUSE_BUTTON_LEFT]:
+            movement_multiplier = self.movement_multiplier
+            if app.keys[glfw.KEY_LEFT_SHIFT]:
+                movement_multiplier = self.movement_fast_multiplier
+
             if app.keys[glfw.KEY_A]:
-                self.position -= right * self.movement_multiplier * elapsed
+                self.position -= right * movement_multiplier * elapsed
             elif app.keys[glfw.KEY_D]:
-                self.position += right * self.movement_multiplier * elapsed
+                self.position += right * movement_multiplier * elapsed
             if app.keys[glfw.KEY_W]:
-                self.position += direction * self.movement_multiplier * elapsed
+                self.position += direction * movement_multiplier * elapsed
             elif app.keys[glfw.KEY_S]:
-                self.position -= direction * self.movement_multiplier * elapsed
+                self.position -= direction * movement_multiplier * elapsed
             if app.keys[glfw.KEY_Q]:
-                self.position += up * self.movement_multiplier * elapsed
+                self.position += up * movement_multiplier * elapsed
             elif app.keys[glfw.KEY_E]:
-                self.position -= up * self.movement_multiplier * elapsed
+                self.position -= up * movement_multiplier * elapsed
 
         self.view = Matrix44.look_at(
             self.position,
