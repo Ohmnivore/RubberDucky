@@ -1,6 +1,5 @@
 # TODO
-* rotation camera mode
-* render to/from textures
+* Render to/from textures
 * Diffuse maps, specular, emission, normal maps
-* edge detection
-* hatching
+* Edge detection
+* Hatching
