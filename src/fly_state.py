@@ -27,8 +27,8 @@ class FlyState(State):
         # self.outline_program = OutlineWireframeProgram(self.default_program, 1.0)
         # self.outline_program.load_files('shaders/outline_wireframe.vert.glsl', 'shaders/outline_wireframe.frag.glsl')
 
-        self.outline_program = OutlineWireframeConstantPixelProgram(self.default_program, 1.0)
-        self.outline_program.load_files('shaders/outline_wireframe_constant_pixel.vert.glsl', 'shaders/outline_wireframe_constant_pixel.frag.glsl')
+        # self.outline_program = OutlineWireframeConstantPixelProgram(self.default_program, 1.0)
+        # self.outline_program.load_files('shaders/outline_wireframe_constant_pixel.vert.glsl', 'shaders/outline_wireframe_constant_pixel.frag.glsl')
 
         # self.outline_program = OutlineScaleProgram(self.default_program, 0.1)
         # self.outline_program.load_files('shaders/outline_scale.vert.glsl', 'shaders/outline_scale.frag.glsl')
@@ -42,7 +42,7 @@ class FlyState(State):
         # self.outline_program = OutlineDerivativesProgram()
         # self.outline_program.load_files('shaders/outline_derivatives.vert.glsl', 'shaders/outline_derivatives.frag.glsl')
 
-        self.program = self.outline_program
+        self.program = self.default_program
 
         app.camera = FlyCamera()
         app.camera.position.xyz = [0.0, 6, 0.0]
@@ -97,4 +97,4 @@ class FlyState(State):
     def destroy(self):
         super(FlyState, self).destroy()
         self.default_program.destroy()
-        self.outline_program.destroy()
+        # self.outline_program.destroy()

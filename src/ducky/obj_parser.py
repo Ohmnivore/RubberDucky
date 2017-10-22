@@ -1,5 +1,6 @@
 from os import path
 
+from OpenGL.GL import *
 from pyrr import Vector3
 
 from ducky.material_mesh import MaterialMesh, Face
@@ -56,7 +57,10 @@ class MtlParser:
             self.cur_mtl.diffuse_texture = Texture()
             self.cur_mtl.diffuse_texture.create()
             self.cur_mtl.diffuse_texture.bind()
-            self.cur_mtl.diffuse_texture.load_2D_from_path(actual_rel_path)
+            self.cur_mtl.diffuse_texture.set_filtering(GL_LINEAR_MIPMAP_LINEAR, GL_LINEAR)
+            self.cur_mtl.diffuse_texture.set_clamping(GL_REPEAT, GL_REPEAT, GL_REPEAT)
+            self.cur_mtl.diffuse_texture.load_2D_from_path(actual_rel_path, GL_RGBA, True)
+            self.cur_mtl.diffuse_texture.generate_mipmaps()
 
     def seek_next_word(self):
         self.cur_word += 1

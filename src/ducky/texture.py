@@ -49,13 +49,17 @@ class Texture:
         self.level = 0
         glTexImage2D(self.target, self.level, internal_format, self.width, self.height, 0, format, type, pixels)
 
-    def load_2D_from_path(self, path):
+    def load_2D_from_path(self, path, format, pre_multiply = True):
         with Image.open(path) as image:
-            self.load_2D_from_image(image)
+            self.load_2D_from_image(image, format, pre_multiply)
 
-    def load_2D_from_image(self, image):
-        try:
+    def load_2D_from_image(self, image, format, pre_multiply = True):
+        if pre_multiply:
+            transparent = Image.new("RGBA", image.size, (0, 0, 0, 0))
+            image = Image.composite(image, transparent, image)
+
+        if format == GL_RGBA:
             width, height, raw = image.size[0], image.size[1], image.tobytes("raw", "RGBA", 0, -1)
-        except SystemError:
-            width, height, raw = image.size[0], image.size[1], image.tobytes("raw", "RGBX", 0, -1)
-        self.load_2D(raw, width, height, GL_RGBA, GL_RGBA, GL_UNSIGNED_BYTE, 0)
+        else:
+            width, height, raw = image.size[0], image.size[1], image.tobytes("raw", "RGB", 0, -1)
+        self.load_2D(raw, width, height, format, format, GL_UNSIGNED_BYTE, 0)

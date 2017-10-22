@@ -24,7 +24,9 @@ class Material:
         glUniform3fv(program.uMaterial_emissiveColor, 1,    self.emissive_color.astype('float32').tobytes())
         glUniform1f(program.uMaterial_alpha,                self.alpha)
         if self.diffuse_texture != None:
+            glActiveTexture(GL_TEXTURE0)
             self.diffuse_texture.bind()
+            glUniform1i(program.uTexDiffuse, 0)
 
     def gamma_correct(self, gamma):
         pow_vec_3D(self.ambient_color, gamma)
