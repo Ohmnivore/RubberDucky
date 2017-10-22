@@ -49,11 +49,21 @@ class Texture:
         self.level = 0
         glTexImage2D(self.target, self.level, internal_format, self.width, self.height, 0, format, type, pixels)
 
-    def load_2D_from_path(self, path, format, pre_multiply = True):
+    def load_2D_from_path(self, path, format, pre_multiply = True, gamma_correct = True, gamma = 0.0):
         with Image.open(path) as image:
-            self.load_2D_from_image(image, format, pre_multiply)
+            self.load_2D_from_image(image, format, pre_multiply, gamma_correct, gamma)
 
-    def load_2D_from_image(self, image, format, pre_multiply = True):
+    def load_2D_from_image(self, image, format, pre_multiply = True, gamma_correct = True, gamma = 0.0):
+        # From https://gist.github.com/mozbugbox/10cd35b2872628246140
+        if gamma_correct:
+            lut = [pow(x / 255.0, gamma) * 255 for x in range(256)]
+            lut = lut * 3 # Need one set of data for each band for RGB
+            if image.mode == 'RGBA':
+                alpha_lut = [x for x in range(256)]
+                lut += alpha_lut
+            image = image.point(lut)
+
+        # From https://stackoverflow.com/a/31401077
         if pre_multiply:
             transparent = Image.new("RGBA", image.size, (0, 0, 0, 0))
             image = Image.composite(image, transparent, image)
