@@ -1,4 +1,4 @@
-import os.path as path
+from os import path
 
 from pyrr import Vector3, Matrix44, Quaternion
 
@@ -16,17 +16,9 @@ class Model:
         self.meshmtl_map = None
 
     def load_obj(self, filepath):
-        # Reading source files
-        obj_path = filepath
-        mtl_path = path.splitext(filepath)[0] + '.mtl'
-
-        mtl_parser = MtlParser()
-        with open(mtl_path) as mtl_file:
-            mtl_parser.parse_string(mtl_file.read())
-        
-        obj_parser = ObjParser()
-        with open(obj_path) as obj_file:
-            obj_parser.parse_string(mtl_parser.mtl_map, obj_file.read())
+        obj_parser = ObjParser(path.dirname(filepath))
+        with open(filepath) as obj_file:
+            obj_parser.parse_string(obj_file.read())
         
         self.meshmtl_map = obj_parser.mtl_map
         

@@ -1,14 +1,18 @@
+from os import path
+
 from pyrr import Vector3
 
 from ducky.material_mesh import MaterialMesh, Face
+from ducky.texture import Texture
 
 class MtlParser:
 
-    def __init__(self):
+    def __init__(self, mtl_map, dirpath):
+        self.dirpath = dirpath
         self.words = []
         self.cur_line = 0
         self.cur_word = 0
-        self.mtl_map = {}
+        self.mtl_map = mtl_map
         self.cur_mtl = None
 
     def parse_string(self, content):
@@ -44,7 +48,15 @@ class MtlParser:
             self.cur_mtl.mtl.specular_color = self.read_color()
         elif word == 'Ke':
             self.cur_mtl.mtl.emissive_color = self.read_color()
-    
+        elif word == 'map_Kd':
+            rel_path = ''
+            while self.cur_word < len(self.words) - 1:
+                rel_path += ' ' + self.seek_next_word()
+            actual_rel_path = path.join(self.dirpath, rel_path[1:])
+            self.cur_mtl.diffuse_texture = Texture()
+            self.cur_mtl.diffuse_texture.bind()
+            self.cur_mtl.diffuse_texture.load_2D_from_path(actual_rel_path)
+
     def seek_next_word(self):
         self.cur_word += 1
         if self.cur_word >= len(self.words):
@@ -66,7 +78,8 @@ class MtlParser:
 
 class ObjParser:
 
-    def __init__(self):
+    def __init__(self, dirpath):
+        self.dirpath = dirpath
         self.words = []
         self.cur_line = 0
         self.cur_word = 0
@@ -76,8 +89,7 @@ class ObjParser:
         self.texcoords = []
         self.normals = []
 
-    def parse_string(self, mtl_map, content):
-        self.mtl_map = mtl_map
+    def parse_string(self, content):
         lines = content.split('\n')
 
         for line in lines:
@@ -111,6 +123,14 @@ class ObjParser:
             self.texcoords.append(self.read_vector_2D())
         elif word == 'f':
             self.cur_mtl.mesh.faces.append(self.read_face())
+        elif word == 'mtllib':
+            rel_path = ''
+            while self.cur_word < len(self.words) - 1:
+                rel_path += ' ' + self.seek_next_word()
+            actual_rel_path = path.join(self.dirpath, rel_path[1:])
+            mtl_parser = MtlParser(self.mtl_map, self.dirpath)
+            with open(actual_rel_path) as mtl_file:
+                mtl_parser.parse_string(mtl_file.read())
 
     def seek_next_word(self):
         self.cur_word += 1

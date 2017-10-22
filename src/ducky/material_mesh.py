@@ -8,6 +8,7 @@ from ducky.math_util import pow_vec_3D
 class Material:
 
     def __init__(self):
+        self.diffuse_texture = None
         self.ambient_color = Vector3([0.0, 0.0, 0.0])
         self.diffuse_color = Vector3([0.0, 0.0, 0.0])
         self.specular_color = Vector3([0.0, 0.0, 0.0])
