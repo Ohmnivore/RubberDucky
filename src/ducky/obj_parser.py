@@ -54,6 +54,7 @@ class MtlParser:
                 rel_path += ' ' + self.seek_next_word()
             actual_rel_path = path.join(self.dirpath, rel_path[1:])
             self.cur_mtl.diffuse_texture = Texture()
+            self.cur_mtl.diffuse_texture.create()
             self.cur_mtl.diffuse_texture.bind()
             self.cur_mtl.diffuse_texture.load_2D_from_path(actual_rel_path)
 

@@ -55,7 +55,7 @@ class Texture:
 
     def load_2D_from_image(self, image):
         try:
-            width, height, raw = image.size[0], image.size[1], image.tostring("raw", "RGBA", 0, -1)
+            width, height, raw = image.size[0], image.size[1], image.tobytes("raw", "RGBA", 0, -1)
         except SystemError:
-            width, height, raw = image.size[0], image.size[1], image.tostring("raw", "RGBX", 0, -1)
+            width, height, raw = image.size[0], image.size[1], image.tobytes("raw", "RGBX", 0, -1)
         self.load_2D(raw, width, height, GL_RGBA, GL_RGBA, GL_UNSIGNED_BYTE, 0)

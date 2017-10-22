@@ -23,6 +23,8 @@ class Material:
         glUniform1f(program.uMaterial_specularExponent,     self.specular_exponent)
         glUniform3fv(program.uMaterial_emissiveColor, 1,    self.emissive_color.astype('float32').tobytes())
         glUniform1f(program.uMaterial_alpha,                self.alpha)
+        if self.diffuse_texture != None:
+            self.diffuse_texture.bind()
 
     def gamma_correct(self, gamma):
         pow_vec_3D(self.ambient_color, gamma)
@@ -31,7 +33,8 @@ class Material:
         pow_vec_3D(self.emissive_color, gamma)
 
     def destroy(self):
-        pass
+        if self.diffuse_texture != None:
+            self.diffuse_texture.destroy()
 
 class Face:
 
