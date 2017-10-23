@@ -4,11 +4,16 @@ from OpenGL.GL import *
 from pyrr import Vector3
 
 from ducky.math_util import pow_vec_3D
+from ducky.texture import transparent_pixel_texture
 
 class Material:
 
     def __init__(self):
-        self.diffuse_texture = None
+        self.ambient_texture = transparent_pixel_texture
+        self.diffuse_texture = transparent_pixel_texture
+        self.specular_texture = transparent_pixel_texture
+        self.emissive_texture = transparent_pixel_texture
+
         self.ambient_color = Vector3([0.0, 0.0, 0.0])
         self.diffuse_color = Vector3([0.0, 0.0, 0.0])
         self.specular_color = Vector3([0.0, 0.0, 0.0])
@@ -23,10 +28,19 @@ class Material:
         glUniform1f(program.uMaterial_specularExponent,     self.specular_exponent)
         glUniform3fv(program.uMaterial_emissiveColor, 1,    self.emissive_color.astype('float32').tobytes())
         glUniform1f(program.uMaterial_alpha,                self.alpha)
-        if self.diffuse_texture != None:
-            glActiveTexture(GL_TEXTURE0)
-            self.diffuse_texture.bind()
-            glUniform1i(program.uTexDiffuse, 0)
+
+        glActiveTexture(GL_TEXTURE0)
+        self.ambient_texture.bind()
+        glUniform1i(program.uTexAmbient, 0)
+        glActiveTexture(GL_TEXTURE1)
+        self.diffuse_texture.bind()
+        glUniform1i(program.uTexDiffuse, 1)
+        glActiveTexture(GL_TEXTURE2)
+        self.specular_texture.bind()
+        glUniform1i(program.uTexSpecular, 2)
+        glActiveTexture(GL_TEXTURE3)
+        self.emissive_texture.bind()
+        glUniform1i(program.uTexEmissive, 3)
 
     def gamma_correct(self, gamma):
         pow_vec_3D(self.ambient_color, gamma)
@@ -35,8 +49,14 @@ class Material:
         pow_vec_3D(self.emissive_color, gamma)
 
     def destroy(self):
-        if self.diffuse_texture != None:
+        if self.ambient_texture != transparent_pixel_texture:
+            self.ambient_texture.destroy()
+        if self.diffuse_texture != transparent_pixel_texture:
             self.diffuse_texture.destroy()
+        if self.specular_texture != transparent_pixel_texture:
+            self.specular_texture.destroy()
+        if self.emissive_texture != transparent_pixel_texture:
+            self.emissive_texture.destroy()
 
 class Face:
 

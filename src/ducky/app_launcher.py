@@ -86,10 +86,7 @@ def start_app(state):
     set_icons(window)
 
     # Create state and camera
-    app.window = window
-    app.camera = Camera()
-    app.state = state
-    app.state.create()
+    app.create(window, Camera(), state)
 
     # Setup OpenGL global config
     if app.multisample_bits > 0:

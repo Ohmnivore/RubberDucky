@@ -3,6 +3,7 @@ import numpy as np
 from pyrr import Vector3
 
 from ducky.sun import Sun
+from ducky.texture import create_default_texture
 
 class App:
 
@@ -42,6 +43,13 @@ class App:
         self.window = None # Set by start_app()
         self.camera = None # A default camera is created by start_app()
         self.state = None  # Set by start_app()
+
+    def create(self, window, camera, state):
+        create_default_texture()
+        app.window = window
+        app.camera = camera
+        app.state = state
+        app.state.create()
 
     def update(self, elapsed):
         self.camera.update(elapsed)

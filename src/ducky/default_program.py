@@ -28,7 +28,10 @@ class DefaultProgram(Program):
         self.uMaterial_emissiveColor =      glGetUniformLocation(gl_program, 'uMaterial.emissiveColor')
 
         # Textures
+        self.uTexAmbient =                  glGetUniformLocation(gl_program, 'uTexAmbient')
         self.uTexDiffuse =                  glGetUniformLocation(gl_program, 'uTexDiffuse')
+        self.uTexSpecular =                 glGetUniformLocation(gl_program, 'uTexSpecular')
+        self.uTexEmissive =                 glGetUniformLocation(gl_program, 'uTexEmissive')
 
         # Sun uniforms
         self.uSun_ambientColor =            glGetUniformLocation(gl_program, 'uSun.ambientColor')

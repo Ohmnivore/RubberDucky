@@ -50,18 +50,14 @@ class MtlParser:
             self.cur_mtl.mtl.specular_color = self.read_color()
         elif word == 'Ke':
             self.cur_mtl.mtl.emissive_color = self.read_color()
+        elif word == 'map_Ka':
+            self.cur_mtl.mtl.ambient_texture = self.read_texture()
         elif word == 'map_Kd':
-            rel_path = ''
-            while self.cur_word < len(self.words) - 1:
-                rel_path += ' ' + self.seek_next_word()
-            actual_rel_path = path.join(self.dirpath, rel_path[1:])
-            self.cur_mtl.diffuse_texture = Texture()
-            self.cur_mtl.diffuse_texture.create()
-            self.cur_mtl.diffuse_texture.bind()
-            self.cur_mtl.diffuse_texture.set_filtering(GL_LINEAR_MIPMAP_LINEAR, GL_LINEAR)
-            self.cur_mtl.diffuse_texture.set_clamping(GL_REPEAT, GL_REPEAT, GL_REPEAT)
-            self.cur_mtl.diffuse_texture.load_2D_from_path(actual_rel_path, GL_RGBA, True, True, app.gamma)
-            self.cur_mtl.diffuse_texture.generate_mipmaps()
+            self.cur_mtl.mtl.diffuse_texture = self.read_texture()
+        elif word == 'map_Ks':
+            self.cur_mtl.mtl.specular_texture = self.read_texture()
+        elif word == 'map_Ke':
+            self.cur_mtl.mtl.emissive_texture = self.read_texture()
 
     def seek_next_word(self):
         self.cur_word += 1
@@ -81,6 +77,20 @@ class MtlParser:
 
     def read_color(self):
         return Vector3([self.read_float(), self.read_float(), self.read_float()])
+
+    def read_texture(self):
+        rel_path = ''
+        while self.cur_word < len(self.words) - 1:
+            rel_path += ' ' + self.seek_next_word()
+        actual_rel_path = path.join(self.dirpath, rel_path[1:])
+        texture = Texture()
+        texture.create()
+        texture.bind()
+        texture.set_filtering(GL_LINEAR_MIPMAP_LINEAR, GL_LINEAR)
+        texture.set_clamping(GL_REPEAT, GL_REPEAT, GL_REPEAT)
+        texture.load_2D_from_path(actual_rel_path, GL_RGBA, True, True, app.gamma)
+        texture.generate_mipmaps()
+        return texture
 
 class ObjParser:
 

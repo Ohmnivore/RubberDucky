@@ -1,7 +1,6 @@
 # TODO
 * GPU timer query for proper statistics
 * Render to/from textures
-* Diffuse maps, specular, emission, normal maps
 * Dittering/color palette
 * Pixel art upscaling
 

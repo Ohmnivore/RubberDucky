@@ -5,6 +5,7 @@ class Texture:
 
     def __init__(self, target = GL_TEXTURE_2D):
         self.gl_texture = None
+        self.created = False
         self.target = target
 
         self.clamping_s = GL_CLAMP_TO_EDGE
@@ -19,9 +20,12 @@ class Texture:
 
     def create(self):
         self.gl_texture = glGenTextures(1)
+        self.created = True
 
     def destroy(self):
-        glDeleteTextures(1, self.gl_texture)
+        if self.created:
+            glDeleteTextures(self.gl_texture)
+            self.created = False
 
     def set_clamping(self, clamping_s, clamping_t, clamping_r):
         self.clamping_s = clamping_s
@@ -73,3 +77,14 @@ class Texture:
         else:
             width, height, raw = image.size[0], image.size[1], image.tobytes("raw", "RGB", 0, -1)
         self.load_2D(raw, width, height, format, format, GL_UNSIGNED_BYTE, 0)
+
+transparent_pixel_texture = Texture()
+
+def create_default_texture():
+    global transparent_pixel_texture
+    transparent_pixel_texture.create()
+    transparent_pixel_texture.bind()
+    transparent_pixel_texture.set_filtering(GL_NEAREST, GL_NEAREST)
+    transparent_pixel_texture.set_clamping(GL_REPEAT, GL_REPEAT, GL_REPEAT)
+    white = Image.new("RGBA", (2, 2), (0, 0, 0, 0))
+    transparent_pixel_texture.load_2D(white.tobytes("raw", "RGBA", 0, -1), 2, 2, GL_RGBA, GL_RGBA, GL_UNSIGNED_BYTE, 0)
