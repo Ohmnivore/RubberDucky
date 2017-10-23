@@ -157,5 +157,5 @@ def start_app(state):
     print('Avg FPS: {:.2f}    Avg elapsed: {:.4f}'.format(avg_fps, avg_ms))
 
     # Shutdown
-    state.destroy()
+    app.destroy()
     glfw.terminate()

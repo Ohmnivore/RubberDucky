@@ -3,7 +3,7 @@ import numpy as np
 from pyrr import Vector3
 
 from ducky.sun import Sun
-from ducky.texture import create_default_texture
+from ducky.texture import create_default_textures, destroy_default_textures
 
 class App:
 
@@ -45,11 +45,15 @@ class App:
         self.state = None  # Set by start_app()
 
     def create(self, window, camera, state):
-        create_default_texture()
+        create_default_textures()
         app.window = window
         app.camera = camera
         app.state = state
         app.state.create()
+
+    def destroy(self):
+        self.state.destroy()
+        destroy_default_textures()
 
     def update(self, elapsed):
         self.camera.update(elapsed)
@@ -71,5 +75,6 @@ class App:
 
     def center_mouse(self):
         self.set_mouse_pos(self.width / 2, self.height / 2)
+
 
 app = App()
